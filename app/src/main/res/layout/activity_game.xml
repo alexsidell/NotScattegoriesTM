@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameActivity">
+
+
+    <TextView
+        android:id="@+id/countDownTimer"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:text="TextView"
+        android:layout_margin="20dp"
+        android:background="@color/cardview_dark_background"
+        android:textColor="@color/cardview_light_background"
+        android:gravity="center"
+        android:textSize="50sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        />
+
+    <TextView
+        android:id="@+id/letterView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:text="TextView"
+        android:layout_margin="20dp"
+        android:background="@color/cardview_dark_background"
+        android:textColor="@color/cardview_light_background"
+        android:gravity="center"
+        android:textSize="50sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="50dp">
+        <TextView
+            android:id="@+id/Cat1"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cat_placeholder"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:textSize="@dimen/cat_text_size"/>
+
+        <TextView
+            android:id="@+id/Cat2"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cat_placeholder"
+            android:gravity="center"
+            android:layout_below="@id/Cat1"
+            android:textSize="@dimen/cat_text_size"/>
+        <TextView
+            android:id="@+id/Cat3"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cat_placeholder"
+            android:gravity="center"
+            android:layout_below="@id/Cat2"
+            android:textSize="@dimen/cat_text_size"/>
+        <TextView
+            android:id="@+id/Cat4"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cat_placeholder"
+            android:gravity="center"
+            android:layout_below="@id/Cat3"
+            android:textSize="@dimen/cat_text_size"/>
+        <TextView
+            android:id="@+id/Cat5"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cat_placeholder"
+            android:gravity="center"
+            android:layout_below="@id/Cat4"
+            android:textSize="@dimen/cat_text_size"/>
+
+    </RelativeLayout>
+</RelativeLayout>
