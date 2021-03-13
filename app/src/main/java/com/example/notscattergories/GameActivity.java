@@ -1,7 +1,9 @@
 package com.example.notscattergories;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.CountDownTimer;
@@ -24,6 +26,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<String> categoriesArray;
     private TextView[] categoriesListView;
     private ProgressBar progressBar;
+
+    AlertDialog.Builder alertDialogBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +53,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         categoriesArray = new ArrayList<>();
         getCategoriesFromFile();
+
+        initTimesUpDialogue();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.countDownTimer:
-                startGame(60000, 1000);
+                startGame(6000, 1000);
                 break;
             case R.id.letterView:
                 reset();
@@ -82,8 +88,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFinish() {
-                timer.setText("FINISHED!!");
+
+                timer.setText("Play Again");
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
                 progressBar.setProgress(0);
+
             }
         }.start();
     }
@@ -149,5 +159,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         for (int i=0; i<cats.length; i++) {
             categoriesListView[i].setText(categoriesArray.get(cats[i]));
         }
+    }
+
+    private void initTimesUpDialogue() {
+        alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Time's up!!!!");
+        alertDialogBuilder.setMessage("How did you do?");
+        alertDialogBuilder.setCancelable(true);
+        alertDialogBuilder.setPositiveButton("Play Again", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
     }
 }
