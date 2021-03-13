@@ -9,12 +9,11 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,24 +47,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.Cat4),
         findViewById(R.id.Cat5)};
 
-        //generateCatagories();
         categoriesArray = new ArrayList<>();
-        categoriesArray.add("VIDEO GAMES");
-        categoriesArray.add("ELECTRONIC GADGETS");
-        categoriesArray.add("BOARD GAMES");
-        categoriesArray.add("THINGS THAT USE A REMOTE");
-        categoriesArray.add("CARD GAMES");
-        categoriesArray.add("INTERNET LINGO");
-        categoriesArray.add("WIRELESS THINGS");
-        categoriesArray.add("COMPUTER PARTS");
-        categoriesArray.add("SEAFOOD");
-        categoriesArray.add("WEEKEND ACTIVITIES");
-        categoriesArray.add("SPORTS PLAYED INDOORS");
-        categoriesArray.add("THINGS YOU SEE AT THE ZOO");
-        categoriesArray.add("MATH TERMS");
-        categoriesArray.add("WORDS WITH DOUBLE LETTERS");
-        categoriesArray.add("WORDS ENDING WITH -LY");
-
+        getCategoriesFromFile();
     }
 
     @Override
@@ -123,20 +106,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void generateCatagories() {
-        Scanner s = null;
+    public void getCategoriesFromFile() {
         try {
-            s = new Scanner(new File("Catagories.txt"));
-        } catch (FileNotFoundException e) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open("categories.txt")));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                categoriesArray.add(line);
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        categoriesArray = new ArrayList<String>();
-
-        while(s.hasNextLine()) {
-            categoriesArray.add(s.nextLine());
-        }
-        s.close();
-
     }
 
     public int[] generateArrayIndexes () {
