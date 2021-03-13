@@ -2,21 +2,14 @@ package com.example.notscattergories;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import java.io.File;
@@ -27,10 +20,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView timer;
     private TextView letter;
-    private char[] letters;
+    final private char[] LETTERS = "ABCDEFGHIJKLMNOPRSTW".toCharArray();
     private CountDownTimer countTimer;
-    private ArrayList<String> catagoriesArray;
-    private TextView[] catagoriesListView;
+    private ArrayList<String> categoriesArray;
+    private TextView[] categoriesListView;
     private ProgressBar progressBar;
 
     @Override
@@ -43,16 +36,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         progressBar = findViewById(R.id.progressBar);
 
-
-
-
         letter = findViewById(R.id.letterView);
         letter.setOnClickListener(this);
 
-        letters = "ABCDEFGHIJKLMNOPRSTW".toCharArray();
         countTimer = null;
 
-        catagoriesListView = new TextView[]{
+        categoriesListView = new TextView[]{
         findViewById(R.id.Cat1),
         findViewById(R.id.Cat2),
         findViewById(R.id.Cat3),
@@ -60,25 +49,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.Cat5)};
 
         //generateCatagories();
-        catagoriesArray = new ArrayList<>();
-        catagoriesArray.add("VIDEO GAMES");
-        catagoriesArray.add("ELECTRONIC GADGETS");
-        catagoriesArray.add("BOARD GAMES");
-        catagoriesArray.add("THINGS THAT USE A REMOTE");
-        catagoriesArray.add("CARD GAMES");
-        catagoriesArray.add("INTERNET LINGO");
-        catagoriesArray.add("WIRELESS THINGS");
-        catagoriesArray.add("COMPUTER PARTS");
-        catagoriesArray.add("SEAFOOD");
-        catagoriesArray.add("WEEKEND ACTIVITIES");
-        catagoriesArray.add("SPORTS PLAYED INDOORS");
-        catagoriesArray.add("THINGS YOU SEE AT THE ZOO");
-        catagoriesArray.add("MATH TERMS");
-        catagoriesArray.add("WORDS WITH DOUBLE LETTERS");
-        catagoriesArray.add("WORDS ENDING WITH -LY");
-
-
-
+        categoriesArray = new ArrayList<>();
+        categoriesArray.add("VIDEO GAMES");
+        categoriesArray.add("ELECTRONIC GADGETS");
+        categoriesArray.add("BOARD GAMES");
+        categoriesArray.add("THINGS THAT USE A REMOTE");
+        categoriesArray.add("CARD GAMES");
+        categoriesArray.add("INTERNET LINGO");
+        categoriesArray.add("WIRELESS THINGS");
+        categoriesArray.add("COMPUTER PARTS");
+        categoriesArray.add("SEAFOOD");
+        categoriesArray.add("WEEKEND ACTIVITIES");
+        categoriesArray.add("SPORTS PLAYED INDOORS");
+        categoriesArray.add("THINGS YOU SEE AT THE ZOO");
+        categoriesArray.add("MATH TERMS");
+        categoriesArray.add("WORDS WITH DOUBLE LETTERS");
+        categoriesArray.add("WORDS ENDING WITH -LY");
 
     }
 
@@ -102,7 +88,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         progressBar.setMax(seconds);
         progressBar.setProgress(seconds);
 
-
         countTimer = new CountDownTimer(time, tick) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -122,8 +107,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void generateLetter() {
         Random rand = new Random();
-        int index = rand.nextInt(letters.length);
-        letter.setText(Character.toString(letters[index]));
+        int index = rand.nextInt(LETTERS.length);
+        letter.setText(Character.toString(LETTERS[index]));
     }
 
     public void startGame(int time, int tick) {
@@ -135,7 +120,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void reset() {
         if (countTimer != null) {
             countTimer.cancel();
-                    }
+        }
     }
 
     public void generateCatagories() {
@@ -145,10 +130,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        catagoriesArray = new ArrayList<String>();
+        categoriesArray = new ArrayList<String>();
 
         while(s.hasNextLine()) {
-            catagoriesArray.add(s.nextLine());
+            categoriesArray.add(s.nextLine());
         }
         s.close();
 
@@ -161,7 +146,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Random rand = new Random();
 
         while (catNumbers[length - 1] == -1) {
-            int num = rand.nextInt(catagoriesArray.size());
+            int num = rand.nextInt(categoriesArray.size());
             if (!containsInt(catNumbers, num)) {
                 catNumbers[index] = num;
                 index++;
@@ -183,7 +168,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int[] cats = generateArrayIndexes();
 
         for (int i=0; i<cats.length; i++) {
-            catagoriesListView[i].setText(catagoriesArray.get(cats[i]));
+            categoriesListView[i].setText(categoriesArray.get(cats[i]));
         }
     }
 }
