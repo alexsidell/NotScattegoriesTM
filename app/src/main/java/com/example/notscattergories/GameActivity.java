@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -30,6 +31,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private CountDownTimer countTimer;
     private ArrayList<String> catagoriesArray;
     private TextView[] catagoriesListView;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         timer = findViewById(R.id.countDownTimer);
         timer.setOnClickListener(this);
+
+        progressBar = findViewById(R.id.progressBar);
+
+
+
 
         letter = findViewById(R.id.letterView);
         letter.setOnClickListener(this);
@@ -71,6 +78,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         catagoriesArray.add("WORDS ENDING WITH -LY");
 
 
+
+
     }
 
     @Override
@@ -89,16 +98,24 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void startTimer(int time, int tick) {
         reset();
+        int seconds = (time/1000);
+        progressBar.setMax(seconds);
+        progressBar.setProgress(seconds);
+
 
         countTimer = new CountDownTimer(time, tick) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timer.setText(Long.toString(millisUntilFinished / 1000));
+                int progress = (int) ((millisUntilFinished)/1000);
+                progressBar.setProgress(progress);
+
             }
 
             @Override
             public void onFinish() {
                 timer.setText("FINISHED!!");
+                progressBar.setProgress(0);
             }
         }.start();
     }
@@ -118,7 +135,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void reset() {
         if (countTimer != null) {
             countTimer.cancel();
-        }
+                    }
     }
 
     public void generateCatagories() {
