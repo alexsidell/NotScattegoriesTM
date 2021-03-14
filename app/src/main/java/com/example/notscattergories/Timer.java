@@ -94,10 +94,11 @@ public class Timer {
     }
 
     public void restart(){
-        pause();
-        timeLeft = mDuration;
-        updateUI(mDuration);
-
+        if (countTimer != null) {
+            pause();
+            timeLeft = mDuration;
+            updateUI(mDuration);
+        }
     }
 
     public boolean isRunning(){
