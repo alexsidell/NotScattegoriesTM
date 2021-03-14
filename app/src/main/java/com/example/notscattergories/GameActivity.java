@@ -1,18 +1,14 @@
 package com.example.notscattergories;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,18 +19,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView timerView;
     private TextView letterView;
-    private TextView[] categoriesListView;
+    private ProgressBar progressBar;
+
+    private Button btnPlayers;
+    private Button btnPlayPause;
+    private Button btnRestart;
+    private Button btnSettings;
 
     private LinearLayout categoryView;
 
-    private final int TIMER_TICK = 1000;
-
     private ArrayList<String> allCategories; //Stores all categories from file.
 
-    private CountDownTimer countTimer;
-    private ProgressBar progressBar;
-
-    AlertDialog.Builder alertDialogBuilder;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,31 +39,59 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         timerView = findViewById(R.id.countDownTimer);
         timerView.setOnClickListener(this);
-
         progressBar = findViewById(R.id.progressBar);
-
         letterView = findViewById(R.id.letterView);
         letterView.setOnClickListener(this);
 
         allCategories = new ArrayList<>();
 
-        countTimer = null;
-
-
         categoryView = findViewById(R.id.categoryLayoutView);
 
+
+        btnPlayers = findViewById(R.id.btnPlayers);
+        btnPlayPause = findViewById(R.id.btnPlayPause);
+        btnRestart = findViewById(R.id.btnRestart);
+        btnSettings = findViewById(R.id.btnSettings);
+
+        btnPlayers.setOnClickListener(this);
+        btnPlayPause.setOnClickListener(this);
+        btnRestart.setOnClickListener(this);
+        btnSettings.setOnClickListener(this);
+
+        btnPlayPause.setText("start");
+
+
         getCategoriesFromFile();
-        initTimesUpDialogue();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.countDownTimer:
-                startGame(6000);
+                //startGame(10000);
                 break;
             case R.id.letterView:
-                reset();
+                break;
+            case R.id.btnPlayers:
+                //Show player info
+                break;
+            case R.id.btnPlayPause:
+                if(!gameInProgress()){
+                    startGame(10000);
+                }
+                else if(timer.isRunning()){
+                        timer.pause();
+                    } else {
+                        timer.resume();
+                    }
+                break;
+            case R.id.btnRestart:
+                if (timer != null) {
+                    timer.restart();
+                }
+                break;
+            case R.id.btnSettings:
+                //open settings
                 break;
             default:
                 break;
@@ -75,48 +99,28 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void startGame(int time) {
-        Game game = new Game(5, 7, allCategories.size());
-        game.start();
-
-        displayLetter(game.getLetter());
-        displayCategories(game.getCategoryIndexes());
-        startTimer(time);
-    }
-
-    private void startTimer(int time) {
-        reset();
-        int seconds = (time/1000);
-        progressBar.setMax(seconds);
-        progressBar.setProgress(seconds);
-
-        countTimer = new CountDownTimer(time, TIMER_TICK) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timerView.setText(Long.toString(millisUntilFinished / 1000));
-                int progress = (int) ((millisUntilFinished)/1000);
-                progressBar.setProgress(progress);
-            }
-
-            @Override
-            public void onFinish() {
-                timerView.setText("Play Again");
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-                progressBar.setProgress(0);
-
-            }
-        }.start();
-    }
-
-    private void displayLetter(String letter) {
-        letterView.setText(letter);
-
-    }
-
-    private void reset() {
-        if (countTimer != null) {
-            countTimer.cancel();
+        if (timer == null) {
+            timer = new Timer(time, timerView, progressBar, this, btnPlayPause);
         }
+
+        if (!timer.isRunning()) {
+            Game game = new Game(7, allCategories.size());
+            game.start();
+
+            displayLetter(game.getLetter());
+            displayCategories(game.getCategoryIndexes());
+            timer.start();
+        }
+    }
+
+
+    private boolean gameInProgress(){
+        if (timer != null){
+            return !timer.isFinished();
+        } else {
+            return false;
+        }
+
     }
 
     private void getCategoriesFromFile() {
@@ -131,6 +135,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void displayLetter(String letter) {
+        letterView.setText(letter);
+    }
+
+    /**
+     * A method to display categories. Dynamically allocates to a the LinearLayout category view
+     * @param categoryIndexes The indexes within the allCategories array to be displayed
+     */
     private void displayCategories(int[] categoryIndexes) {
         int[] cats = categoryIndexes;
         categoryView.removeAllViews();
@@ -143,16 +155,5 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void initTimesUpDialogue() {
-        alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Time's up!!!!");
-        alertDialogBuilder.setMessage("How did you do?");
-        alertDialogBuilder.setCancelable(true);
-        alertDialogBuilder.setPositiveButton("Play Again", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
-    }
 }
