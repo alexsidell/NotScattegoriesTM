@@ -1,5 +1,6 @@
 package com.example.notscattergories;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -158,6 +159,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         for (int i=0; i<cats.length; i++) {
             TextView temp = new TextView(this);
             temp.setText(allCategories.get(cats[i]));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                temp.setTextAppearance(R.style.catText);
+            }
             categoryView.addView(temp);
         }
 

@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="customTextViewBackAttributeColor" format="color" />
+    <attr name="customProgressColour" format="color" />
+    <style name="catText">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/marinegreen</item>
+        <item name="android:textSize">25dp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
 </resources>
