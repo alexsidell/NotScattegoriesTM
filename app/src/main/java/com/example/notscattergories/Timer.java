@@ -2,6 +2,7 @@ package com.example.notscattergories;
 
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -13,39 +14,51 @@ public class Timer {
     private ProgressBar progressBar;
     private GameActivity context;
 
-    private int timerDuration;
+    private long timeLeft;
+    private int mDuration;
     private CountDownTimer countTimer = null;
     AlertDialog.Builder alertDialogBuilder;
 
     private final int TIMER_TICK = 1000;
 
     private boolean running = false;
+    private boolean isFinished = true;
 
-    private int pauseTimeRemaining;
+    private long timeRemaining;
+    private Button button;
 
-
-    public Timer(int duration, TextView timerView, ProgressBar progressBar, GameActivity gameActivity){
-        this.timerDuration = duration;
+    public Timer(int duration, TextView timerView, ProgressBar progressBar, GameActivity gameActivity, Button button){
+        mDuration = duration;
         this.timerView = timerView;
         this.progressBar = progressBar;
         this.context = gameActivity;
+        this.button = button;
 
         initTimesUpDialogue();
+
+        int seconds = (int)(mDuration / 1000);
+        progressBar.setMax(seconds);
+        progressBar.setProgress(seconds);
+        isFinished = false;
     }
 
-    public void play(){
+    public void start(){
+        play(mDuration);
+    }
+
+    private void play(long timerDuration){
         if (!running) {
+            isFinished = false;
             running = true;
-            int seconds = (timerDuration / 1000);
-            progressBar.setMax(seconds);
-            progressBar.setProgress(seconds);
+
+            button.setText("pause");
 
             countTimer = new CountDownTimer(timerDuration, TIMER_TICK) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    timerView.setText(Long.toString(millisUntilFinished / 1000));
-                    int progress = (int) ((millisUntilFinished) / 1000);
-                    progressBar.setProgress(progress);
+                    timeLeft = millisUntilFinished;
+
+                    updateUI(millisUntilFinished);
                 }
 
                 @Override
@@ -55,27 +68,47 @@ public class Timer {
                     alertDialog.show();
                     progressBar.setProgress(0);
                     running = false;
+                    isFinished = true;
+                    button.setText("Start");
                 }
 
             }.start();
         }
     }
     public void pause(){
+        countTimer.cancel();
+        countTimer = null;
+        running = false;
+        button.setText("resume");
+    }
+
+    public void resume(){
+        play(timeLeft);
+        running = true;
 
     }
 
     public void restart(){
         if (countTimer != null) {
-            countTimer.cancel();
-            countTimer = null;
-            running = false;
-
-            play();
+            pause();
+            timeLeft = mDuration;
+            updateUI(mDuration);
         }
     }
 
     public boolean isRunning(){
         return running;
+    }
+
+    public boolean isFinished(){
+        return isFinished;
+    }
+
+    private void updateUI(long millisUntilFinished){
+
+        timerView.setText(Long.toString(millisUntilFinished / 1000));
+        int progress = (int) ((millisUntilFinished) / 1000);
+        progressBar.setProgress(progress);
     }
 
 

@@ -32,8 +32,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private Timer timer;
 
-    private boolean gameRunning = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +58,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnRestart.setOnClickListener(this);
         btnSettings.setOnClickListener(this);
 
+        btnPlayPause.setText("start");
+
 
         getCategoriesFromFile();
     }
@@ -68,9 +68,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.countDownTimer:
-                System.out.println("start");
-
-                startGame(6000);
+                //startGame(10000);
                 break;
             case R.id.letterView:
                 break;
@@ -78,9 +76,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 //Show player info
                 break;
             case R.id.btnPlayPause:
-                if (timer != null) {
-
+                if(!gameInProgress()){
+                    startGame(10000);
                 }
+                else if(timer.isRunning()){
+                        timer.pause();
+                    } else {
+                        timer.resume();
+                    }
                 break;
             case R.id.btnRestart:
                 if (timer != null) {
@@ -97,24 +100,28 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private void startGame(int time) {
         if (timer == null) {
-            timer = new Timer(time, timerView, progressBar, this);
+            timer = new Timer(time, timerView, progressBar, this, btnPlayPause);
         }
 
         if (!timer.isRunning()) {
-            gameRunning = true;
             Game game = new Game(7, allCategories.size());
             game.start();
 
             displayLetter(game.getLetter());
             displayCategories(game.getCategoryIndexes());
-
-
-            timer.play();
+            timer.start();
         }
     }
 
 
+    private boolean gameInProgress(){
+        if (timer != null){
+            return !timer.isFinished();
+        } else {
+            return false;
+        }
 
+    }
 
     private void getCategoriesFromFile() {
         try {
