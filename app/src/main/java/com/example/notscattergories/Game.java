@@ -50,7 +50,7 @@ public class Game {
     }
 
     private boolean containsInt(int[] array, int number) {
-        for(int i=0; i<array.length; i++) {
+        for(int i=0; i < array.length; i++) {
             if (array[i] == number) {
                 return true;
             }

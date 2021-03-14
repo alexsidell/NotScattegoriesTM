@@ -28,7 +28,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private ArrayList<String> allCategories; //Stores all categories from file.
 
-    private CountDownTimer countTimer;
+    private CountDownTimer countTimer = null;
     private ProgressBar progressBar;
 
     AlertDialog.Builder alertDialogBuilder;
@@ -40,15 +40,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         timerView = findViewById(R.id.countDownTimer);
         timerView.setOnClickListener(this);
-
         progressBar = findViewById(R.id.progressBar);
-
         letterView = findViewById(R.id.letterView);
         letterView.setOnClickListener(this);
 
         allCategories = new ArrayList<>();
-
-        countTimer = null;
 
         categoryView = findViewById(R.id.categoryLayoutView);
 
