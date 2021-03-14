@@ -100,7 +100,7 @@
             android:layout_margin="3dp"
             app:icon="@drawable/ic_play"
             app:iconGravity="textStart"
-            android:gravity="center"/>
+            />
 
         <Button
             android:id="@+id/btnRestart"
