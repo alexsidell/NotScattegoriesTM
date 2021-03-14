@@ -33,7 +33,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private Timer timer;
 
-    private final int GAME_TIME = 10000;
+    private final int GAME_TIME = 60000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
