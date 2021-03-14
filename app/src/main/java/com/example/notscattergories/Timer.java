@@ -52,6 +52,8 @@ public class Timer {
             running = true;
 
             button.setText("pause");
+            //button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
+
 
             countTimer = new CountDownTimer(timerDuration, TIMER_TICK) {
                 @Override
@@ -70,6 +72,8 @@ public class Timer {
                     running = false;
                     isFinished = true;
                     button.setText("Start");
+                    //button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
+
                 }
 
             }.start();
@@ -80,6 +84,7 @@ public class Timer {
         countTimer = null;
         running = false;
         button.setText("resume");
+        //button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
     }
 
     public void resume(){
@@ -89,11 +94,10 @@ public class Timer {
     }
 
     public void restart(){
-        if (countTimer != null) {
-            pause();
-            timeLeft = mDuration;
-            updateUI(mDuration);
-        }
+        pause();
+        timeLeft = mDuration;
+        updateUI(mDuration);
+
     }
 
     public boolean isRunning(){
