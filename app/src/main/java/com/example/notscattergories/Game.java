@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Game {
 
-    private int timerDuration;
+    private Timer timer;
     private int numberOfCategories;
 
     private int[] catIndexes;
@@ -22,7 +22,7 @@ public class Game {
 
 
     public Game(int timerDuration, int numberOfCategories, int totalNumberOfCategoriesInFile){
-        this.timerDuration = timerDuration;
+        Timer timer = new Timer(timerDuration);
         this.numberOfCategories = numberOfCategories;
         this.totalNumberOfCategoriesInFile = totalNumberOfCategoriesInFile;
     }
