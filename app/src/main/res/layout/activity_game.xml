@@ -80,7 +80,8 @@
         android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         android:padding="2dp"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        >
 
 
         <Button
@@ -88,28 +89,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            />
+            app:icon="@drawable/ic_player"
+            app:iconGravity="textStart"
+            android:gravity="center"/>
 
         <Button
             android:id="@+id/btnPlayPause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            />
+            app:icon="@drawable/ic_play"
+            app:iconGravity="textStart"
+            android:gravity="center"/>
 
         <Button
             android:id="@+id/btnRestart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            />
+            app:icon="@drawable/ic_restart"
+            app:iconGravity="textStart"/>
 
         <Button
             android:id="@+id/btnSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            />
+            app:icon="@drawable/ic_settings"
+            app:iconGravity="textStart"/>
 
 
     </LinearLayout>
