@@ -15,8 +15,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,10 +22,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private TextView letter;
     private TextView[] categoriesListView;
 
-    private int mNumberOfCategories = 5;
-    private int[] catNumbers;
-
-    final private char[] LETTERS = "ABCDEFGHIJKLMNOPRSTW".toCharArray();
+    private final int TIMER_TICK = 1000;
 
     private CountDownTimer countTimer;
     private ArrayList<String> categoriesArray; //Stores all categories from file.
@@ -67,7 +62,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.countDownTimer:
-                startGame(6000, 1000);
+                startGame(6000);
                 break;
             case R.id.letterView:
                 reset();
@@ -77,19 +72,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void startTimer(int time, int tick) {
+    public void startTimer(int time) {
         reset();
         int seconds = (time/1000);
         progressBar.setMax(seconds);
         progressBar.setProgress(seconds);
 
-        countTimer = new CountDownTimer(time, tick) {
+        countTimer = new CountDownTimer(time, TIMER_TICK) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timer.setText(Long.toString(millisUntilFinished / 1000));
                 int progress = (int) ((millisUntilFinished)/1000);
                 progressBar.setProgress(progress);
-
             }
 
             @Override
@@ -103,34 +97,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }.start();
     }
 
-    public void generateLetter() {
-        Random rand = new Random();
-        int index = rand.nextInt(LETTERS.length);
-        letter.setText(Character.toString(LETTERS[index]));
-    }
 
-    public void startGame(int time, int tick) {
-        generateLetter();
-        generateCategories(mNumberOfCategories);
-        displayCategories();
-        startTimer(time, tick);
-    }
 
-    public void generateCategories(int numberOfCategories){
-        catNumbers = new int[numberOfCategories]; //Create based on numberOfCategories var
-        Arrays.fill(catNumbers, -1); // fill with -1 to start.
+    public void startGame(int time) {
+        getCategoriesFromFile();
 
-        int length = catNumbers.length;
-        int index = 0;
-        Random rand = new Random();
+        Game game = new Game(5, 5, categoriesArray.size());
 
-        while (catNumbers[length - 1] == -1) {
-            int num = rand.nextInt(categoriesArray.size());
-            if (!containsInt(catNumbers, num)) {
-                catNumbers[index] = num;
-                index++;
-            }
-        }
+        game.start();
+        letter.setText(game.getLetter());
+        game.generateCategories();
+        displayCategories(game.getCategoryIndexes());
+        startTimer(time);
     }
 
     public void reset() {
@@ -151,17 +129,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public boolean containsInt(int[] array, int number) {
-        for(int i=0; i<array.length; i++) {
-            if (array[i] == number) {
-                return true;
-            }
-        }
-        return false;
-    }
 
-    public void displayCategories() {
-        int[] cats = catNumbers;
+    public void displayCategories(int[] categoryIndexes) {
+        int[] cats = categoryIndexes;
 
         for (int i=0; i<cats.length; i++) {
             categoriesListView[i].setText(categoriesArray.get(cats[i]));
