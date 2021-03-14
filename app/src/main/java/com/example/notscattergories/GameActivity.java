@@ -32,6 +32,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private Timer timer;
 
+    private final int GAME_TIME = 10000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,13 +61,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnSettings.setOnClickListener(this);
 
         getCategoriesFromFile();
+        clearAllViews();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.countDownTimer:
-                //startGame(10000);
                 break;
             case R.id.letterView:
                 break;
@@ -74,7 +76,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnPlayPause:
                 if(!gameInProgress()){
-                    startGame(10000);
+                    startGame(GAME_TIME);
                 }
                 else if(timer.isRunning()){
                         timer.pause();
@@ -85,6 +87,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnRestart:
                 if (timer != null) {
                     timer.restart();
+                    clearAllViews();
+
                 }
                 break;
             case R.id.btnSettings:
@@ -110,6 +114,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void clearAllViews(){
+        timerView.setText("_");
+        letterView.setText("_");
+        categoryView.removeAllViews();
+
+
+    }
 
     private boolean gameInProgress(){
         if (timer != null){
