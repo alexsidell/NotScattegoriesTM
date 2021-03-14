@@ -89,9 +89,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
+            android:gravity="center"
             app:icon="@drawable/ic_player"
-            app:iconGravity="textStart"
-            android:gravity="center"/>
+            app:iconGravity="textStart" />
 
         <Button
             android:id="@+id/btnPlayPause"
