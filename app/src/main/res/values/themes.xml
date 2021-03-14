@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="android:background">@color/offwhite</item>
         <item name="customTextViewBackAttributeColor">@color/marinegreen</item>
-        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textColor">@color/marinegreen</item>
         <item name="customProgressColour">@color/darkblue</item>
 
     </style>

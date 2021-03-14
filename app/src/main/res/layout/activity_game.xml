@@ -28,6 +28,7 @@
             android:gravity="center"
             android:text="TextView"
             android:textSize="50sp"
+            android:textColor="@color/white"
             />
 
         <TextView
@@ -35,6 +36,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:text="TextView"
+            android:textColor="@color/white"
             android:layout_margin="20dp"
             android:background="?customTextViewBackAttributeColor"
             android:gravity="center"
@@ -53,7 +55,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="43dp"
             android:layout_marginRight="43dp"
-            android:progressBackgroundTintMode="src_atop"
+            android:progressDrawable="@drawable/gradient"
             />
 
     </RelativeLayout>
