@@ -95,14 +95,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            />
+            android:text="play/pause" />
 
         <Button
             android:id="@+id/btnRestart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            />
+            android:text="restart" />
 
         <Button
             android:id="@+id/btnSettings"
