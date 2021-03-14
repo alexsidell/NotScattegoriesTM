@@ -12,8 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,7 +21,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView timerView;
     private TextView letterView;
-    private TextView[] categoriesListView;
 
     private LinearLayout categoryView;
 
@@ -53,7 +50,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         countTimer = null;
 
-
         categoryView = findViewById(R.id.categoryLayoutView);
 
         getCategoriesFromFile();
@@ -67,7 +63,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 startGame(6000);
                 break;
             case R.id.letterView:
-                reset();
+                resetTimer();
                 break;
             default:
                 break;
@@ -84,7 +80,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void startTimer(int time) {
-        reset();
+        resetTimer();
         int seconds = (time/1000);
         progressBar.setMax(seconds);
         progressBar.setProgress(seconds);
@@ -108,12 +104,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }.start();
     }
 
-    private void displayLetter(String letter) {
-        letterView.setText(letter);
 
-    }
-
-    private void reset() {
+    private void resetTimer() {
         if (countTimer != null) {
             countTimer.cancel();
         }
@@ -131,6 +123,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void displayLetter(String letter) {
+        letterView.setText(letter);
+    }
+
+    /**
+     * A method to display categories. Dynamically allocates to a the LinearLayout category view
+     * @param categoryIndexes The indexes within the allCategories array to be displayed
+     */
     private void displayCategories(int[] categoryIndexes) {
         int[] cats = categoryIndexes;
         categoryView.removeAllViews();
@@ -151,7 +151,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         alertDialogBuilder.setPositiveButton("Play Again", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                //Can do something when button is pressed.
             }
         });
     }
