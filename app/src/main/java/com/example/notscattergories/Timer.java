@@ -2,6 +2,7 @@ package com.example.notscattergories;
 
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
+import android.view.Gravity;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -51,8 +52,7 @@ public class Timer {
             isFinished = false;
             running = true;
 
-            button.setText("pause");
-            //button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
+            button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
 
 
             countTimer = new CountDownTimer(timerDuration, TIMER_TICK) {
@@ -71,9 +71,7 @@ public class Timer {
                     progressBar.setProgress(0);
                     running = false;
                     isFinished = true;
-                    button.setText("Start");
-                    //button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
-
+                    button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
                 }
 
             }.start();
@@ -83,21 +81,19 @@ public class Timer {
         countTimer.cancel();
         countTimer = null;
         running = false;
-        button.setText("resume");
-        //button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
+        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
     }
 
     public void resume(){
         play(timeLeft);
-        running = true;
-
     }
 
     public void restart(){
-        pause();
-        timeLeft = mDuration;
-        updateUI(mDuration);
-
+        if (countTimer != null) {
+            pause();
+            timeLeft = mDuration;
+            updateUI(mDuration);
+        }
     }
 
     public boolean isRunning(){
@@ -109,7 +105,6 @@ public class Timer {
     }
 
     private void updateUI(long millisUntilFinished){
-
         timerView.setText(Long.toString(millisUntilFinished / 1000));
         int progress = (int) ((millisUntilFinished) / 1000);
         progressBar.setProgress(progress);

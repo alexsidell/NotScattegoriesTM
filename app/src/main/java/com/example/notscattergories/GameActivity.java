@@ -58,9 +58,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnRestart.setOnClickListener(this);
         btnSettings.setOnClickListener(this);
 
-        btnPlayPause.setText("start");
-
-
         getCategoriesFromFile();
     }
 
