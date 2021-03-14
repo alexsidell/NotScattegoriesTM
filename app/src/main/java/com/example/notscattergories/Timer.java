@@ -16,6 +16,7 @@ public class Timer {
 
     private TextView mTimerView;
     private ProgressBar mProgressBar;
+
     private GameActivity mContext;
     private Button mPlayPauseButton;
 
