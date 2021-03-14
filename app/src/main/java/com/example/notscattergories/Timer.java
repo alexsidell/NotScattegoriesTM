@@ -172,6 +172,7 @@ public class Timer {
      */
     private void initTimesUpDialogue() {
         mAlertDialogBuilder = new AlertDialog.Builder(mContext);
+        String title = "Time's up!!!!";
         mAlertDialogBuilder.setTitle("Time's up!!!!");
         mAlertDialogBuilder.setMessage("How did you do?");
         mAlertDialogBuilder.setCancelable(true);
