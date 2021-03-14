@@ -8,6 +8,7 @@
 
     <RelativeLayout
         android:id="@+id/timeDisplayBox"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -62,22 +63,25 @@
     <LinearLayout
         android:id="@+id/categoryLayoutView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/timeDisplayBox"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="50dp"
+        android:padding="10dp"
         android:layout_marginTop="50dp"
         android:orientation="vertical" />
 
 
     <LinearLayout
         android:id="@+id/buttonbox"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_below="@id/categoryLayoutView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
-        android:padding="2dp">
+        android:padding="2dp"
+        android:layout_alignParentBottom="true">
+
 
         <Button
             android:id="@+id/btnPlayers"
@@ -95,8 +99,8 @@
 
         <Button
             android:id="@+id/btnPause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
 
             />
 
