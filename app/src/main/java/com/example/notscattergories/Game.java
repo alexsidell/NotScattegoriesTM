@@ -15,10 +15,11 @@ public class Game {
 
     final private char[] LETTERS = "ABCDEFGHIJKLMNOPRSTW".toCharArray();
 
-
     private String letter;
 
     private int totalNumberOfCategoriesInFile;
+
+
 
     public Game(int timerDuration, int numberOfCategories, int totalNumberOfCategoriesInFile){
         this.timerDuration = timerDuration;
@@ -28,10 +29,10 @@ public class Game {
 
     public void start(){
         generateLetter();
-
+        generateCategories();
     }
 
-    public void generateCategories(){
+    private void generateCategories(){
         catIndexes = new int[numberOfCategories]; //Create based on numberOfCategories var
         Arrays.fill(catIndexes, -1); // fill with -1 to start.
 
@@ -48,11 +49,7 @@ public class Game {
         }
     }
 
-
-
-
-
-    public boolean containsInt(int[] array, int number) {
+    private boolean containsInt(int[] array, int number) {
         for(int i=0; i<array.length; i++) {
             if (array[i] == number) {
                 return true;
@@ -61,8 +58,7 @@ public class Game {
         return false;
     }
 
-
-    public void generateLetter() {
+    private void generateLetter() {
         Random rand = new Random();
         int index = rand.nextInt(LETTERS.length);
         letter = Character.toString(LETTERS[index]);
