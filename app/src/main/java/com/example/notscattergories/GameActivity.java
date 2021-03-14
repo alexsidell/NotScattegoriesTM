@@ -15,16 +15,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView timer;
     private TextView letter;
-    final private char[] LETTERS = "ABCDEFGHIJKLMNOPRSTW".toCharArray();
-    private CountDownTimer countTimer;
-    private ArrayList<String> categoriesArray;
     private TextView[] categoriesListView;
+
+    private int mNumberOfCategories = 5;
+    private int[] catNumbers;
+
+    final private char[] LETTERS = "ABCDEFGHIJKLMNOPRSTW".toCharArray();
+
+    private CountDownTimer countTimer;
+    private ArrayList<String> categoriesArray; //Stores all categories from file.
     private ProgressBar progressBar;
 
     AlertDialog.Builder alertDialogBuilder;
@@ -88,7 +94,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFinish() {
-
                 timer.setText("Play Again");
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
@@ -106,8 +111,26 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void startGame(int time, int tick) {
         generateLetter();
-        displayRandCats();
+        generateCategories(mNumberOfCategories);
+        displayCategories();
         startTimer(time, tick);
+    }
+
+    public void generateCategories(int numberOfCategories){
+        catNumbers = new int[numberOfCategories]; //Create based on numberOfCategories var
+        Arrays.fill(catNumbers, -1); // fill with -1 to start.
+
+        int length = catNumbers.length;
+        int index = 0;
+        Random rand = new Random();
+
+        while (catNumbers[length - 1] == -1) {
+            int num = rand.nextInt(categoriesArray.size());
+            if (!containsInt(catNumbers, num)) {
+                catNumbers[index] = num;
+                index++;
+            }
+        }
     }
 
     public void reset() {
@@ -128,22 +151,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public int[] generateArrayIndexes () {
-        int[] catNumbers = {-1, -1, -1, -1 ,-1};
-        int length = catNumbers.length;
-        int index = 0;
-        Random rand = new Random();
-
-        while (catNumbers[length - 1] == -1) {
-            int num = rand.nextInt(categoriesArray.size());
-            if (!containsInt(catNumbers, num)) {
-                catNumbers[index] = num;
-                index++;
-            }
-        }
-        return catNumbers;
-    }
-
     public boolean containsInt(int[] array, int number) {
         for(int i=0; i<array.length; i++) {
             if (array[i] == number) {
@@ -153,8 +160,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    public void displayRandCats() {
-        int[] cats = generateArrayIndexes();
+    public void displayCategories() {
+        int[] cats = catNumbers;
 
         for (int i=0; i<cats.length; i++) {
             categoriesListView[i].setText(categoriesArray.get(cats[i]));
