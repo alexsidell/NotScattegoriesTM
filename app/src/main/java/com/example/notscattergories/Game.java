@@ -8,7 +8,6 @@ import java.util.Random;
 
 public class Game {
 
-    private int timerDuration;
     private int numberOfCategories;
 
     private int[] catIndexes;
@@ -21,8 +20,7 @@ public class Game {
 
 
 
-    public Game(int timerDuration, int numberOfCategories, int totalNumberOfCategoriesInFile){
-        this.timerDuration = timerDuration;
+    public Game(int numberOfCategories, int totalNumberOfCategoriesInFile){
         this.numberOfCategories = numberOfCategories;
         this.totalNumberOfCategoriesInFile = totalNumberOfCategoriesInFile;
     }
@@ -50,7 +48,7 @@ public class Game {
     }
 
     private boolean containsInt(int[] array, int number) {
-        for(int i=0; i<array.length; i++) {
+        for(int i=0; i < array.length; i++) {
             if (array[i] == number) {
                 return true;
             }
