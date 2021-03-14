@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             app:icon="@drawable/ic_play"
-            app:iconGravity="textStart"
+            android:paddingLeft="30dp"
             />
 
         <Button
