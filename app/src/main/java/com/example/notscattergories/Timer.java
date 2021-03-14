@@ -78,10 +78,12 @@ public class Timer {
         }
     }
     public void pause(){
-        countTimer.cancel();
-        countTimer = null;
-        running = false;
-        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
+        if (countTimer != null) {
+            countTimer.cancel();
+            countTimer = null;
+            running = false;
+            button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
+        }
     }
 
     public void resume(){
@@ -89,11 +91,11 @@ public class Timer {
     }
 
     public void restart(){
-        if (countTimer != null) {
             pause();
             timeLeft = mDuration;
             updateUI(mDuration);
-        }
+            isFinished = true;
+
     }
 
     public boolean isRunning(){
