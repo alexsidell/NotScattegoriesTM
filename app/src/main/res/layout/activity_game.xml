@@ -24,11 +24,11 @@
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@color/cardview_dark_background"
+            android:background="?customTextViewBackAttributeColor"
             android:gravity="center"
             android:text="TextView"
-            android:textColor="@color/cardview_light_background"
-            android:textSize="50sp" />
+            android:textSize="50sp"
+            />
 
         <TextView
             android:id="@+id/letterView"
@@ -36,8 +36,7 @@
             android:layout_height="150dp"
             android:text="TextView"
             android:layout_margin="20dp"
-            android:background="@color/cardview_dark_background"
-            android:textColor="@color/cardview_light_background"
+            android:background="?customTextViewBackAttributeColor"
             android:gravity="center"
             android:textSize="50sp"
             android:layout_alignParentTop="true"
@@ -54,10 +53,10 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="43dp"
             android:layout_marginRight="43dp"
-            android:secondaryProgress="10"
-            android:secondaryProgressTint="@android:color/holo_red_light"
-            android:secondaryProgressTintMode="src_over"
+            android:progressTint="@color/darkblue"
+            android:progressBackgroundTintMode="src_atop"
             />
+
     </RelativeLayout>
 
     <LinearLayout
