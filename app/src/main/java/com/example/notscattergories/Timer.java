@@ -98,6 +98,7 @@ public class Timer {
                     mProgressBar.setProgress(0);
                     mRunning = false;
                     mFinished = true;
+                    //Draw play button as timer is finished
                     mPlayPauseButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
                 }
 
@@ -114,6 +115,7 @@ public class Timer {
             mCountTimer.cancel();
             mCountTimer = null;
             mRunning = false;
+            //Draw play button at timer is currently paused
             mPlayPauseButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
         }
     }
@@ -137,7 +139,6 @@ public class Timer {
             mTimeLeft = mDuration;
             updateUI(mDuration);
             mFinished = true;
-
     }
 
     /**
