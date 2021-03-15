@@ -1,6 +1,7 @@
 package com.example.notscattergories;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.os.Bundle;
 import android.view.View;
@@ -38,8 +39,15 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 noOfSeconds = Integer.parseInt(noOfSecondsInput.getText().toString());
                 noOfCategories = Integer.parseInt(noOfCategoriesInput.getText().toString());
                 break;
+            case R.id.rules:
+                showRules();
             default:
                 break;
         }
     }
+    private void showRules() {
+        DialogFragment newFragment = new RulesDialog();
+        newFragment.show(getSupportFragmentManager(), "rules");
+    }
+
 }
