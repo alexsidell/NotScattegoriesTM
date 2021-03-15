@@ -7,6 +7,9 @@
         <item name="android:textColor">@color/marinegreen</item>
         <item name="android:textSize">25dp</item>
         <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+
     </style>
 
 </resources>
