@@ -16,25 +16,32 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+/**
+ * A class for activity_game.xml
+ */
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView timerView;
-    private TextView letterView;
-    private ProgressBar progressBar;
+    private TextView timerView; //Store the Timer text view
+    private TextView letterView; //Store letterView
+    private ProgressBar progressBar; //Store ProgressBar
 
-    private Button btnPlayers;
-    private Button btnPlayPause;
-    private Button btnRestart;
-    private Button btnSettings;
+    private Button btnPlayers; //Store the Players button
+    private Button btnPlayPause; //Store the Play/Pause Button
+    private Button btnRestart; //Store the restart Button
+    private Button btnSettings; //Store the settings button
 
-    private LinearLayout categoryView;
+    private LinearLayout categoryView; //LinearLayout to store list of TextViews as categories.
 
     private ArrayList<String> allCategories; //Stores all categories from file.
 
-    private Timer timer;
+    private Timer timer; //Stores a timer object.
 
     private final int GAME_TIME = 60000;
 
+    /**
+     * A method that is called when activity is created.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +53,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         letterView = findViewById(R.id.letterView);
         letterView.setOnClickListener(this);
 
-        allCategories = new ArrayList<>();
+        allCategories = new ArrayList<>(); //Stores all categories from the categories.txt
 
         categoryView = findViewById(R.id.categoryLayoutView);
-
 
         btnPlayers = findViewById(R.id.btnPlayers);
         btnPlayPause = findViewById(R.id.btnPlayPause);
