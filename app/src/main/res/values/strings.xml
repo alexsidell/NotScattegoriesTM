@@ -13,4 +13,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="cat_placeholder"> Things that are really fun</string>
+    <string name="time_set_hint">Number Of Seconds</string>
+    <string name="no_of_cats_hint">Number Of Categories</string>
+    <string name="SettingsConfirmStr">MAKE CHANGES</string>
 </resources>
