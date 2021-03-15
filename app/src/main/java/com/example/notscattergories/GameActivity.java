@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.view.View;
 import android.widget.Button;
@@ -57,6 +58,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         allCategories = new ArrayList<>(); //Stores all categories from the categories.txt
 
         categoryView = findViewById(R.id.categoryLayoutView);
+
 
         btnPlayers = findViewById(R.id.btnPlayers);
         btnPlayPause = findViewById(R.id.btnPlayPause);
@@ -119,6 +121,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      * A method to start a game of NotScattegories.
      * @param time The length of the game in milliseconds.
      */
+    private void showRules() {
+        DialogFragment newFragment = new RulesDialog();
+        newFragment.show(getSupportFragmentManager(), "rules");
+    }
+
     private void startGame(int time) {
         if (timer == null) {
             //Create a new timer object if one does not exist. Timer will be null if it has finished.
