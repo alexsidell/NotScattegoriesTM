@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.view.View;
 import android.widget.Button;
@@ -94,10 +95,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnSettings:
                 //open settings
+                showRules();
                 break;
             default:
                 break;
         }
+    }
+
+    private void showRules() {
+        DialogFragment newFragment = new RulesDialog();
+        newFragment.show(getSupportFragmentManager(), "rules");
     }
 
     private void startGame(int time) {
@@ -166,6 +173,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
 
 
 }
