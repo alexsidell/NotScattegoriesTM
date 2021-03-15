@@ -5,12 +5,13 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -30,6 +31,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnSettings;
 
     private LinearLayout categoryView;
+
 
     private ArrayList<String> allCategories; //Stores all categories from file.
 
@@ -51,6 +53,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         allCategories = new ArrayList<>();
 
         categoryView = findViewById(R.id.categoryLayoutView);
+
 
 
         btnPlayers = findViewById(R.id.btnPlayers);
@@ -75,6 +78,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.letterView:
                 break;
             case R.id.btnPlayers:
+                Intent playerScores = new Intent(getApplicationContext(), PlayerScores.class);
+                startActivity(playerScores);
+
                 //Show player info
                 break;
             case R.id.btnPlayPause:
@@ -102,11 +108,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
-    }
-
-    private void showRules() {
-        DialogFragment newFragment = new RulesDialog();
-        newFragment.show(getSupportFragmentManager(), "rules");
     }
 
     private void startGame(int time) {
