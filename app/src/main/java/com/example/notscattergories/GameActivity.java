@@ -78,6 +78,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.letterView:
                 break;
             case R.id.btnPlayers:
+                Intent playerScores = new Intent(getApplicationContext(), PlayerScores.class);
+                startActivity(playerScores);
 
                 //Show player info
                 break;
