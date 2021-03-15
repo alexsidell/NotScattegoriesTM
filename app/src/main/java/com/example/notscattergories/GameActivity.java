@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -28,6 +30,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnSettings;
 
     private LinearLayout categoryView;
+
 
     private ArrayList<String> allCategories; //Stores all categories from file.
 
@@ -49,6 +52,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         allCategories = new ArrayList<>();
 
         categoryView = findViewById(R.id.categoryLayoutView);
+
 
 
         btnPlayers = findViewById(R.id.btnPlayers);
@@ -73,6 +77,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.letterView:
                 break;
             case R.id.btnPlayers:
+
                 //Show player info
                 break;
             case R.id.btnPlayPause:
