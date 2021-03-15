@@ -10,7 +10,9 @@ import androidx.fragment.app.DialogFragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -59,7 +61,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         categoryView = findViewById(R.id.categoryLayoutView);
 
-
         btnPlayers = findViewById(R.id.btnPlayers);
         btnPlayPause = findViewById(R.id.btnPlayPause);
         btnRestart = findViewById(R.id.btnRestart);
@@ -87,6 +88,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnPlayers:
                 //Show player info
+                Intent playerScores = new Intent(getApplicationContext(), PlayerScores.class);
+                startActivity(playerScores);
                 break;
             case R.id.btnPlayPause:
                 //Used to start, play, and pause the timer.
@@ -117,15 +120,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    /**
-     * A method to start a game of NotScattegories.
-     * @param time The length of the game in milliseconds.
-     */
+
     private void showRules() {
         DialogFragment newFragment = new RulesDialog();
         newFragment.show(getSupportFragmentManager(), "rules");
     }
 
+    /**
+     * A method to start a game of NotScattegories.
+     * @param time The length of the game in milliseconds.
+     */
     private void startGame(int time) {
         if (timer == null) {
             //Create a new timer object if one does not exist. Timer will be null if it has finished.
