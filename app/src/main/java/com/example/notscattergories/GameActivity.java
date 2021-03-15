@@ -32,7 +32,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private LinearLayout categoryView;
 
-
     private ArrayList<String> allCategories; //Stores all categories from file.
 
     private Timer timer;
@@ -43,6 +42,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        //for multiplayer
+        //createWebSocketClient();
 
         timerView = findViewById(R.id.countDownTimer);
         timerView.setOnClickListener(this);
