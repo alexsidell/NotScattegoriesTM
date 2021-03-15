@@ -1,5 +1,6 @@
 package com.example.notscattergories;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -95,7 +96,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnSettings:
                 //open settings
-                showRules();
+                Intent settingsPop = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(settingsPop);
                 break;
             default:
                 break;
@@ -173,7 +175,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
-
 
 
 }
