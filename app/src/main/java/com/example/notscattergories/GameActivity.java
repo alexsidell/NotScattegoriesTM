@@ -69,9 +69,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnSettings.setOnClickListener(this);
 
         getCategoriesFromFile();
-        clearAllViews();
+        clearAllViews(); //Ensures consistency in apps display
     }
 
+    /**
+     * A method to listen for button presses, and perform actions based on that.
+     * @param v The view being pressed.
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -83,6 +87,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 //Show player info
                 break;
             case R.id.btnPlayPause:
+                //Used to start, play, and pause the timer.
                 if(!gameInProgress()){
                     startGame(GAME_TIME);
                 }
@@ -93,6 +98,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 break;
             case R.id.btnRestart:
+                //Used to be start
                 if (timer != null) {
                     timer.restart();
                     clearAllViews();
@@ -100,7 +106,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btnSettings:
-                //open settings
+                //open Settings popup
                 Intent settingsPop = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(settingsPop);
                 break;
@@ -109,12 +115,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * A method to start a game of NotScattegories.
+     * @param time The length of the game in milliseconds.
+     */
     private void startGame(int time) {
         if (timer == null) {
+            //Create a new timer object if one does not exist. Timer will be null if it has finished.
             timer = new Timer(time, timerView, progressBar, this, btnPlayPause);
         }
 
         if (!timer.isRunning()) {
+            //If game is not running, start a new game.
             Game game = new Game(7, allCategories.size());
             game.start();
 
@@ -124,14 +136,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * A method to clear all views. This allows for user consistency.
+     */
     private void clearAllViews(){
         timerView.setText("_");
         letterView.setText("_");
         categoryView.removeAllViews();
-
-
     }
 
+    /**
+     * A method to check whether a game is in progress. It checks whether the timer has finished.
+     * This will return true if the game has been paused.
+     * @return True if game is in progress. False if game is not in progress.
+     */
     private boolean gameInProgress(){
         if (timer != null){
             return !timer.isFinished();
@@ -141,6 +159,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * A method to get a list of categories from the categories.txt file.
+     */
     private void getCategoriesFromFile() {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open("categories.txt")));
@@ -153,6 +174,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * A method to display a letter in the letterView.
+     * @param letter letter to be displayed.
+     */
     private void displayLetter(String letter) {
         letterView.setText(letter);
     }
