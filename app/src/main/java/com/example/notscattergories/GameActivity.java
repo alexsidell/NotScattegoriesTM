@@ -1,11 +1,14 @@
 package com.example.notscattergories;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -34,7 +37,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private Timer timer;
 
-    private final int GAME_TIME = 60000;
+    private final int GAME_TIME = 90000;
+    private final int NUMBER_OF_CATS = 12;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnSettings.setOnClickListener(this);
 
         getCategoriesFromFile();
+        initialiseSharedPreferences();
         clearAllViews();
     }
 
@@ -78,7 +84,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnPlayPause:
                 if(!gameInProgress()){
-                    startGame(GAME_TIME);
+                    startGame();
                 }
                 else if(timer.isRunning()){
                         timer.pause();
@@ -89,6 +95,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnRestart:
                 if (timer != null) {
                     timer.restart();
+                    timer = null;
                     clearAllViews();
 
                 }
@@ -103,13 +110,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void startGame(int time) {
+    private void startGame() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int time = sharedPref.getInt("time", GAME_TIME);
+        int noOfCats = sharedPref.getInt("categories", NUMBER_OF_CATS);
         if (timer == null) {
             timer = new Timer(time, timerView, progressBar, this, btnPlayPause);
         }
 
         if (!timer.isRunning()) {
-            Game game = new Game(7, allCategories.size());
+            Game game = new Game(noOfCats, allCategories.size());
             game.start();
 
             displayLetter(game.getLetter());
@@ -168,6 +178,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             categoryView.addView(temp);
         }
 
+    }
+
+    private void initialiseSharedPreferences() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("time", GAME_TIME);
+        editor.putInt("categories", NUMBER_OF_CATS);
+        editor.commit();
     }
 
 

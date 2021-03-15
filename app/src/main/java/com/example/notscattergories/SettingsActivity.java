@@ -2,12 +2,16 @@ package com.example.notscattergories;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -28,6 +32,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         noOfCategoriesInput = findViewById(R.id.editCategories);
 
         submitBtn = findViewById(R.id.confirmSettingsBtn);
+        submitBtn.setOnClickListener(this);
 
     }
 
@@ -37,6 +42,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             case R.id.confirmSettingsBtn:
                 noOfSeconds = Integer.parseInt(noOfSecondsInput.getText().toString());
                 noOfCategories = Integer.parseInt(noOfCategoriesInput.getText().toString());
+
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("time", (noOfSeconds * 1000));
+                editor.putInt("categories", (noOfCategories));
+                editor.commit();
+                Toast.makeText(getApplicationContext(), "DONE", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
