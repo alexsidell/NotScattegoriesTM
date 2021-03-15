@@ -1,6 +1,7 @@
 package com.example.notscattergories;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -50,8 +51,15 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 editor.commit();
                 Toast.makeText(getApplicationContext(), "DONE", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.rules:
+                showRules();
             default:
                 break;
         }
     }
+    private void showRules() {
+        DialogFragment newFragment = new RulesDialog();
+        newFragment.show(getSupportFragmentManager(), "rules");
+    }
+
 }

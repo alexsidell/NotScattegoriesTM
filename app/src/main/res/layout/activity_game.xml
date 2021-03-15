@@ -116,8 +116,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             app:icon="@drawable/ic_settings"
-            app:iconGravity="textStart"/>
+            app:iconGravity="textStart" />
 
 
     </LinearLayout>
+
+
+
 </RelativeLayout>
