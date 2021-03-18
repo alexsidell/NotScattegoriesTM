@@ -110,11 +110,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 else if(timer.isRunning()){
                         timer.pause();
                         timerView.setText("pause");
-                        categoryView.setVisibility(View.INVISIBLE);
                 } else {
                     timer.resume();
-                    categoryView.setVisibility(View.VISIBLE);
-
                 }
                 break;
             case R.id.btnRestart:
@@ -151,7 +148,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int noOfCats = sharedPref.getInt("categories", NUMBER_OF_CATS);
         if (timer == null) {
             //Create a new timer object if one does not exist. Timer will be null if it has finished.
-            timer = new Timer(time, timerView, progressBar, this, btnPlayPause);
+            timer = new Timer(time, timerView, progressBar,categoryView, btnPlayPause, this);
         }
 
         if (!timer.isRunning()) {
@@ -159,9 +156,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             Game game = new Game(noOfCats, allCategories.size());
             game.start();
 
+            timer.start();
+
             displayLetter(game.getLetter());
             displayCategories(game.getCategoryIndexes());
-            timer.start();
         }
     }
 
@@ -173,8 +171,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         timerView.setText("_");
         letterView.setText("_");
         categoryView.removeAllViews();
-
-
     }
 
 
@@ -189,7 +185,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             return false;
         }
-
     }
 
 
