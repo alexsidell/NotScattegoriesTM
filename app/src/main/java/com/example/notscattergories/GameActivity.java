@@ -17,6 +17,9 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -106,9 +109,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else if(timer.isRunning()){
                         timer.pause();
-                    } else {
-                        timer.resume();
-                    }
+                        timerView.setText("pause");
+                } else {
+                    timer.resume();
+                }
                 break;
             case R.id.btnRestart:
                 //Used to restart
@@ -116,7 +120,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     timer.restart();
                     timer = null;
                     clearAllViews();
-
                 }
                 break;
             case R.id.btnSettings:
@@ -145,7 +148,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int noOfCats = sharedPref.getInt("categories", NUMBER_OF_CATS);
         if (timer == null) {
             //Create a new timer object if one does not exist. Timer will be null if it has finished.
-            timer = new Timer(time, timerView, progressBar, this, btnPlayPause);
+            timer = new Timer(time, timerView, progressBar,categoryView, btnPlayPause, this);
         }
 
         if (!timer.isRunning()) {
@@ -153,9 +156,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             Game game = new Game(noOfCats, allCategories.size());
             game.start();
 
+            timer.start();
+
             displayLetter(game.getLetter());
             displayCategories(game.getCategoryIndexes());
-            timer.start();
         }
     }
 
@@ -167,8 +171,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         timerView.setText("_");
         letterView.setText("_");
         categoryView.removeAllViews();
-
-
     }
 
 
@@ -183,7 +185,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             return false;
         }
-
     }
 
 
