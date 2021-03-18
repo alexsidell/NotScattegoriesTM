@@ -1,12 +1,15 @@
 package com.example.notscattergories;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -29,6 +32,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private TextView letterView; //Store letterView
     private ProgressBar progressBar; //Store ProgressBar
 
+
     private Button btnPlayers; //Store the Players button
     private Button btnPlayPause; //Store the Play/Pause Button
     private Button btnRestart; //Store the restart Button
@@ -40,7 +44,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private Timer timer; //Stores a timer object.
 
-    private final int GAME_TIME = 60000;
+    private final int GAME_TIME = 90000;
+    private final int NUMBER_OF_CATS = 12;
+
 
     /**
      * A method that is called when activity is created.
@@ -61,6 +67,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         categoryView = findViewById(R.id.categoryLayoutView);
 
+
         btnPlayers = findViewById(R.id.btnPlayers);
         btnPlayPause = findViewById(R.id.btnPlayPause);
         btnRestart = findViewById(R.id.btnRestart);
@@ -72,6 +79,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnSettings.setOnClickListener(this);
 
         getCategoriesFromFile();
+        initialiseSharedPreferences();
         clearAllViews(); //Ensures consistency in apps display
     }
 
@@ -94,7 +102,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnPlayPause:
                 //Used to start, play, and pause the timer.
                 if(!gameInProgress()){
-                    startGame(GAME_TIME);
+                    startGame();
                 }
                 else if(timer.isRunning()){
                         timer.pause();
@@ -103,15 +111,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 break;
             case R.id.btnRestart:
-                //Used to be start
+                //Used to restart
                 if (timer != null) {
                     timer.restart();
+                    timer = null;
                     clearAllViews();
 
                 }
                 break;
             case R.id.btnSettings:
-                //open Settings popup
+                //open settings popup
                 Intent settingsPop = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(settingsPop);
                 break;
@@ -126,11 +135,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         newFragment.show(getSupportFragmentManager(), "rules");
     }
 
+
     /**
      * A method to start a game of NotScattegories.
-     * @param time The length of the game in milliseconds.
      */
-    private void startGame(int time) {
+    private void startGame() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int time = sharedPref.getInt("time", GAME_TIME);
+        int noOfCats = sharedPref.getInt("categories", NUMBER_OF_CATS);
         if (timer == null) {
             //Create a new timer object if one does not exist. Timer will be null if it has finished.
             timer = new Timer(time, timerView, progressBar, this, btnPlayPause);
@@ -138,7 +150,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         if (!timer.isRunning()) {
             //If game is not running, start a new game.
-            Game game = new Game(7, allCategories.size());
+            Game game = new Game(noOfCats, allCategories.size());
             game.start();
 
             displayLetter(game.getLetter());
@@ -147,6 +159,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
     /**
      * A method to clear all views. This allows for user consistency.
      */
@@ -154,7 +167,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         timerView.setText("_");
         letterView.setText("_");
         categoryView.removeAllViews();
+
+
     }
+
 
     /**
      * A method to check whether a game is in progress. It checks whether the timer has finished.
@@ -170,6 +186,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
     /**
      * A method to get a list of categories from the categories.txt file.
      */
@@ -184,6 +201,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
     }
+
 
     /**
      * A method to display a letter in the letterView.
@@ -210,6 +228,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             categoryView.addView(temp);
         }
 
+    }
+
+    private void initialiseSharedPreferences() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("time", GAME_TIME);
+        editor.putInt("categories", NUMBER_OF_CATS);
+        editor.commit();
     }
 
 
