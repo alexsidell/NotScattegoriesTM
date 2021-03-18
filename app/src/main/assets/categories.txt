@@ -10,7 +10,6 @@ Computer Parts
 Software
 Websites
 Game Terms
-Things In A Grocery Store
 Reasons To Quit Your Job
 Things That Have Stripes
 Tourist Attractions
@@ -19,9 +18,6 @@ Things Found In A Hospital
 Food/Drink That Is Green
 Weekend Activities
 Acronyms
-Seafood
-Christmas Songs
-Words Ending In “-N”
 Things In A Grocery Store
 Reasons To Quit Your Job
 Things That Have Stripes
@@ -30,7 +26,6 @@ Diet Foods
 Things Found In A Hospital
 Food/Drink That Is Green
 Weekend Activities
-Acronyms
 Seafood
 Christmas Songs
 Words Ending In “-N”
@@ -46,14 +41,6 @@ Things You See At The Zoo
 Math Terms
 Animals In Books Or Movies
 Things To Do At A Party
-Words With Double Letters
-Children’S Books
-Things Found At A Bar
-Sports Played Indoors
-Names Used In Songs
-Foods You Eat Raw
-Places In Europe
-Olympic Events
 Things You See At The Zoo
 Math Terms
 Animals In Books Or Movies
