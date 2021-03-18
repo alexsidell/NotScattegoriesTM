@@ -17,6 +17,9 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -106,9 +109,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else if(timer.isRunning()){
                         timer.pause();
-                    } else {
-                        timer.resume();
-                    }
+                        timerView.setText("pause");
+                        categoryView.setVisibility(View.INVISIBLE);
+                } else {
+                    timer.resume();
+                    categoryView.setVisibility(View.VISIBLE);
+
+                }
                 break;
             case R.id.btnRestart:
                 //Used to restart
@@ -116,7 +123,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     timer.restart();
                     timer = null;
                     clearAllViews();
-
                 }
                 break;
             case R.id.btnSettings:
