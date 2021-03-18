@@ -2,7 +2,9 @@ package com.example.notscattergories;
 
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
+import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ public class Timer {
 
     private GameActivity mContext;
     private Button mPlayPauseButton;
+    private LinearLayout mCategoryView;
 
     private long mTimeLeft;
     private int mDuration;
@@ -35,15 +38,17 @@ public class Timer {
      * @param duration Duration for the timer
      * @param timerView TextView to display timer information
      * @param progressBar ProgressBar to display timer information
-     * @param gameActivity Context for displaying alert message.
-     * @param button Button from GameActivity to be updated as pressed.
+     * @param context Context for displaying alert message.
+     * @param playPauseButton Button from GameActivity to be updated as pressed.
      */
-    public Timer(int duration, TextView timerView, ProgressBar progressBar, GameActivity gameActivity, Button button){
+    public Timer(int duration, TextView timerView, ProgressBar progressBar, LinearLayout categoryView,
+                 Button playPauseButton, GameActivity context){
         mDuration = duration;
         mTimerView = timerView;
         mProgressBar = progressBar;
-        mContext = gameActivity;
-        mPlayPauseButton = button;
+        mCategoryView = categoryView;
+        mPlayPauseButton = playPauseButton;
+        mContext = context;
 
         initTimesUpDialogue();
 
@@ -58,7 +63,8 @@ public class Timer {
      * Play is not always called with this value, for example if after a pause.
      */
     public void start(){
-        play(mDuration);
+        countIn(mDuration);
+        //play(mDuration);
     }
 
     /**
@@ -70,6 +76,7 @@ public class Timer {
             mFinished = false;
             mRunning = true;
 
+            mCategoryView.setVisibility(View.VISIBLE);
             //Draw a pause button as timer is currently playing.
             mPlayPauseButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
 
@@ -112,6 +119,7 @@ public class Timer {
      */
     public void pause(){
         if (mCountTimer != null) {
+            mCategoryView.setVisibility(View.INVISIBLE);
             mCountTimer.cancel();
             mCountTimer = null;
             mRunning = false;
@@ -125,7 +133,7 @@ public class Timer {
      * This creates another timer from where the previous one was paused.
      */
     public void resume(){
-        play(mTimeLeft);
+        countIn(mTimeLeft);
     }
 
     /**
@@ -167,6 +175,33 @@ public class Timer {
         int progress = (int) ((millisUntilFinished) / 1000);
         mProgressBar.setProgress(progress);
     }
+
+    private void countIn(long timerDuration){
+        mCategoryView.setVisibility(View.INVISIBLE);
+
+        CountDownTimer countIn = new CountDownTimer(3000, TIMER_TICK) {
+            /**
+             * A method that is called on every timer tick. This updates the UI, and
+             * stores the time left in class variable mTimeLeft
+             * @param millisUntilFinished
+             */
+            @Override
+            public void onTick(long millisUntilFinished) {
+                updateUI(millisUntilFinished);
+            }
+
+            /**
+             * A method that is called when the timer is finished. This updates parts of the UI,
+             * and creates and alert dialogue. It also updates the button's logo.
+             */
+            @Override
+            public void onFinish() {
+                play(timerDuration);
+            }
+
+        }.start();
+    }
+
 
 
     /**
