@@ -1,5 +1,6 @@
 package com.example.notscattergories;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.DialogFragment;
 
 import android.preference.PreferenceManager;
@@ -59,6 +61,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         timerView = findViewById(R.id.countDownTimer);
         timerView.setOnClickListener(this);
@@ -120,6 +123,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     timer.restart();
                     timer = null;
                     clearAllViews();
+
                 }
                 break;
             case R.id.btnSettings:
@@ -148,7 +152,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int noOfCats = sharedPref.getInt("categories", NUMBER_OF_CATS);
         if (timer == null) {
             //Create a new timer object if one does not exist. Timer will be null if it has finished.
-            timer = new Timer(time, timerView, progressBar,categoryView, btnPlayPause, this);
+            timer = new Timer(time, timerView, progressBar, categoryView, btnPlayPause, this);
         }
 
         if (!timer.isRunning()) {

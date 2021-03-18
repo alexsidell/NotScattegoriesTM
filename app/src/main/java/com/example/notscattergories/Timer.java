@@ -1,5 +1,6 @@
 package com.example.notscattergories;
 
+import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -23,6 +24,8 @@ public class Timer {
     private Button mPlayPauseButton;
     private LinearLayout mCategoryView;
 
+    private ObjectAnimator progressAnimator;
+
     private long mTimeLeft;
     private int mDuration;
     private CountDownTimer mCountTimer = null;
@@ -32,6 +35,8 @@ public class Timer {
 
     private boolean mRunning = false;
     private boolean mFinished = true;
+
+
 
     /**
      * A constructor for a timer object.
@@ -55,6 +60,12 @@ public class Timer {
         int seconds = (int)(mDuration / 1000);
         progressBar.setMax(seconds);
         progressBar.setProgress(seconds);
+        progressAnimator = ObjectAnimator.ofInt(seconds, "progress", 0,1);
+        progressAnimator.setDuration(mDuration);
+        progressAnimator.start();
+
+
+
         mFinished = false;
     }
 
