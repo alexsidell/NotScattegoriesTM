@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 public class Timer {
 
     private TextView mTimerView;
+    private TextView mCountDownView;
     private ProgressBar mProgressBar;
 
     private GameActivity mContext;
@@ -46,10 +47,11 @@ public class Timer {
      * @param context Context for displaying alert message.
      * @param playPauseButton Button from GameActivity to be updated as pressed.
      */
-    public Timer(int duration, TextView timerView, ProgressBar progressBar, LinearLayout categoryView,
+    public Timer(int duration, TextView timerView, TextView countDownView, ProgressBar progressBar, LinearLayout categoryView,
                  Button playPauseButton, GameActivity context){
         mDuration = duration;
         mTimerView = timerView;
+        mCountDownView = countDownView;
         mProgressBar = progressBar;
         mCategoryView = categoryView;
         mPlayPauseButton = playPauseButton;
@@ -189,6 +191,7 @@ public class Timer {
 
     private void countIn(long timerDuration){
         mCategoryView.setVisibility(View.INVISIBLE);
+        mCountDownView.setVisibility(View.VISIBLE);
 
         CountDownTimer countIn = new CountDownTimer(3000, TIMER_TICK) {
             /**
@@ -198,7 +201,7 @@ public class Timer {
              */
             @Override
             public void onTick(long millisUntilFinished) {
-                updateUI(millisUntilFinished);
+                mCountDownView.setText(Long.toString(millisUntilFinished / 1000));
             }
 
             /**
@@ -207,6 +210,7 @@ public class Timer {
              */
             @Override
             public void onFinish() {
+                mCountDownView.setVisibility(View.INVISIBLE);
                 play(timerDuration);
             }
 
