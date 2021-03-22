@@ -114,25 +114,33 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 //Used to start, play, and pause the timer.
                 if(!gameInProgress()){
                     startGame();
+
                     Toast.makeText(getApplicationContext(), "Starting Game", Toast.LENGTH_SHORT).show();
                 }
                 else if(timer.isRunning()){
-                        timer.pause();
-                        timerView.setText("pause");
-                        Toast.makeText(getApplicationContext(), "Game Paused", Toast.LENGTH_SHORT).show();
+                    timer.pause();
+                    timerView.setTextSize(20);
+                    timerView.setText("Game Paused");
+                    Toast.makeText(getApplicationContext(), "Game Paused", Toast.LENGTH_SHORT).show();
                 } else {
                     timer.resume();
+                    timerView.setTextSize(50);
+                    timerView.setText("");
                     Toast.makeText(getApplicationContext(), "Resuming Game", Toast.LENGTH_SHORT).show();
                 }
+
+
                 break;
             case R.id.btnRestart:
+                timerView.setTextSize(50);
                 Toast.makeText(this, "Hold to Restart", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnSettings:
                 //open settings popup
                 if(gameInProgress()){
                     timer.pause();
-                    timerView.setText("pause");
+                    timerView.setText("Game Paused");
+                    timerView.setTextSize(20);
                 }
                 Intent settingsPop = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(settingsPop);
