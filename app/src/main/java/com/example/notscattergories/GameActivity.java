@@ -29,7 +29,7 @@ import java.util.ArrayList;
 /**
  * A class for activity_game.xml
  */
-public class GameActivity extends AppCompatActivity implements View.OnClickListener {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
     private TextView timerView; //Store the Timer text view
     private TextView letterView; //Store letterView
@@ -80,8 +80,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         btnPlayers.setOnClickListener(this);
         btnPlayPause.setOnClickListener(this);
-        btnRestart.setOnClickListener(this);
         btnSettings.setOnClickListener(this);
+
+        btnRestart.setOnLongClickListener(this);
+
 
         getCategoriesFromFile();
         initialiseSharedPreferences();
@@ -139,6 +141,28 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    /**
+     * A method to listen for long button presses, and perform actions based on that.
+     *
+     * @param v The view being pressed.
+     */
+    @Override
+    public boolean onLongClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnRestart:
+                //Used to restart
+                if (timer != null) {
+                    timer.restart();
+                    timer = null;
+                    clearAllViews();
+                }
+                break;
+            default:
+                break;
+        }
+        return false;
     }
 
 
