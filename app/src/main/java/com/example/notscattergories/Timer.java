@@ -215,9 +215,9 @@ public class Timer {
         mAlertDialogBuilder = new AlertDialog.Builder(mContext);
         String title = "Time's up!!!!";
         mAlertDialogBuilder.setTitle("Time's up!!!!");
-        mAlertDialogBuilder.setMessage("How did you do?");
+        mAlertDialogBuilder.setMessage("Remember to mark down scores!");
         mAlertDialogBuilder.setCancelable(true);
-        mAlertDialogBuilder.setPositiveButton("Play Again", new DialogInterface.OnClickListener() {
+        mAlertDialogBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             /**
              * A method to listen for user input in the dialogue box.
              * @param dialog The current dialogue interface.
