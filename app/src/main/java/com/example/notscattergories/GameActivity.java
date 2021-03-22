@@ -1,6 +1,5 @@
 package com.example.notscattergories;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.DialogFragment;
 
 import android.preference.PreferenceManager;
@@ -35,6 +33,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView timerView; //Store the Timer text view
     private TextView letterView; //Store letterView
+    private TextView countView; //Store countInView
     private ProgressBar progressBar; //Store ProgressBar
 
 
@@ -61,13 +60,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         timerView = findViewById(R.id.countDownTimer);
         timerView.setOnClickListener(this);
         progressBar = findViewById(R.id.progressBar);
         letterView = findViewById(R.id.letterView);
         letterView.setOnClickListener(this);
+        countView = findViewById(R.id.countInTextView);
 
         allCategories = new ArrayList<>(); //Stores all categories from the categories.txt
 
@@ -97,6 +96,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.countDownTimer:
+                if(!gameInProgress()){
+                    startGame();
+                }
                 break;
             case R.id.letterView:
                 break;
@@ -123,7 +125,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     timer.restart();
                     timer = null;
                     clearAllViews();
-
                 }
                 break;
             case R.id.btnSettings:
@@ -156,7 +157,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int noOfCats = sharedPref.getInt("categories", NUMBER_OF_CATS);
         if (timer == null) {
             //Create a new timer object if one does not exist. Timer will be null if it has finished.
-            timer = new Timer(time, timerView, progressBar, categoryView, btnPlayPause, this);
+            timer = new Timer(time, timerView, countView, progressBar,categoryView, btnPlayPause, this);
         }
 
         if (!timer.isRunning()) {
