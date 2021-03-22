@@ -60,17 +60,18 @@
 
     </RelativeLayout>
 
+
     <LinearLayout
         android:id="@+id/categoryLayoutView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="438dp"
+        android:layout_above="@id/buttonbox"
         android:layout_below="@+id/timeDisplayBox"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:padding="10dp"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical" />
-
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="75dp"
+        android:orientation="vertical"
+        android:padding="10dp" />
 
     <LinearLayout
         android:id="@+id/buttonbox"
@@ -120,6 +121,17 @@
 
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/countInTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text=""
+        android:textSize="100sp"
+        android:textColor="@color/cardview_dark_background"
+        />
 
 
 

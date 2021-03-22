@@ -29,10 +29,11 @@ import java.util.ArrayList;
 /**
  * A class for activity_game.xml
  */
-public class GameActivity extends AppCompatActivity implements View.OnClickListener {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
     private TextView timerView; //Store the Timer text view
     private TextView letterView; //Store letterView
+    private TextView countView; //Store countInView
     private ProgressBar progressBar; //Store ProgressBar
 
 
@@ -65,6 +66,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         progressBar = findViewById(R.id.progressBar);
         letterView = findViewById(R.id.letterView);
         letterView.setOnClickListener(this);
+        countView = findViewById(R.id.countInTextView);
 
         allCategories = new ArrayList<>(); //Stores all categories from the categories.txt
 
@@ -78,8 +80,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         btnPlayers.setOnClickListener(this);
         btnPlayPause.setOnClickListener(this);
-        btnRestart.setOnClickListener(this);
         btnSettings.setOnClickListener(this);
+        btnRestart.setOnClickListener(this);
+
+        btnRestart.setOnLongClickListener(this);
+
 
         getCategoriesFromFile();
         initialiseSharedPreferences();
@@ -94,6 +99,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.countDownTimer:
+                if(!gameInProgress()){
+                    startGame();
+                }
                 break;
             case R.id.letterView:
                 break;
@@ -106,14 +114,51 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 //Used to start, play, and pause the timer.
                 if(!gameInProgress()){
                     startGame();
+
+                    Toast.makeText(getApplicationContext(), "Starting Game", Toast.LENGTH_SHORT).show();
                 }
                 else if(timer.isRunning()){
-                        timer.pause();
-                        timerView.setText("pause");
+                    timer.pause();
+                    timerView.setTextSize(20);
+                    timerView.setText("Game Paused");
+                    Toast.makeText(getApplicationContext(), "Game Paused", Toast.LENGTH_SHORT).show();
                 } else {
                     timer.resume();
+                    timerView.setTextSize(50);
+                    timerView.setText("");
+                    Toast.makeText(getApplicationContext(), "Resuming Game", Toast.LENGTH_SHORT).show();
                 }
+
+
                 break;
+            case R.id.btnRestart:
+                timerView.setTextSize(50);
+                Toast.makeText(this, "Hold to Restart", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btnSettings:
+                //open settings popup
+                if(gameInProgress()){
+                    timer.pause();
+                    timerView.setText("Game Paused");
+                    timerView.setTextSize(20);
+                }
+                Intent settingsPop = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(settingsPop);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /**
+     * A method to listen for long button presses, and perform actions based on that.
+     *
+     * @param v The view being pressed.
+     */
+    @Override
+    public boolean onLongClick(View v) {
+        switch (v.getId()) {
             case R.id.btnRestart:
                 //Used to restart
                 if (timer != null) {
@@ -122,14 +167,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     clearAllViews();
                 }
                 break;
-            case R.id.btnSettings:
-                //open settings popup
-                Intent settingsPop = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(settingsPop);
-                break;
             default:
                 break;
         }
+        return false;
     }
 
 
@@ -148,7 +189,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int noOfCats = sharedPref.getInt("categories", NUMBER_OF_CATS);
         if (timer == null) {
             //Create a new timer object if one does not exist. Timer will be null if it has finished.
-            timer = new Timer(time, timerView, progressBar,categoryView, btnPlayPause, this);
+            timer = new Timer(time, timerView, countView, progressBar,categoryView, btnPlayPause, this);
         }
 
         if (!timer.isRunning()) {

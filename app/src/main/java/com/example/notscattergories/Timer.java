@@ -1,5 +1,6 @@
 package com.example.notscattergories;
 
+import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -17,11 +18,14 @@ import androidx.appcompat.app.AlertDialog;
 public class Timer {
 
     private TextView mTimerView;
+    private TextView mCountDownView;
     private ProgressBar mProgressBar;
 
     private GameActivity mContext;
     private Button mPlayPauseButton;
     private LinearLayout mCategoryView;
+
+    private ObjectAnimator progressAnimator;
 
     private long mTimeLeft;
     private int mDuration;
@@ -33,6 +37,8 @@ public class Timer {
     private boolean mRunning = false;
     private boolean mFinished = true;
 
+
+
     /**
      * A constructor for a timer object.
      * @param duration Duration for the timer
@@ -41,10 +47,11 @@ public class Timer {
      * @param context Context for displaying alert message.
      * @param playPauseButton Button from GameActivity to be updated as pressed.
      */
-    public Timer(int duration, TextView timerView, ProgressBar progressBar, LinearLayout categoryView,
+    public Timer(int duration, TextView timerView, TextView countDownView, ProgressBar progressBar, LinearLayout categoryView,
                  Button playPauseButton, GameActivity context){
         mDuration = duration;
         mTimerView = timerView;
+        mCountDownView = countDownView;
         mProgressBar = progressBar;
         mCategoryView = categoryView;
         mPlayPauseButton = playPauseButton;
@@ -55,6 +62,12 @@ public class Timer {
         int seconds = (int)(mDuration / 1000);
         progressBar.setMax(seconds);
         progressBar.setProgress(seconds);
+        progressAnimator = ObjectAnimator.ofInt(seconds, "progress", 0,1);
+        progressAnimator.setDuration(mDuration);
+        progressAnimator.start();
+
+
+
         mFinished = false;
     }
 
@@ -178,6 +191,7 @@ public class Timer {
 
     private void countIn(long timerDuration){
         mCategoryView.setVisibility(View.INVISIBLE);
+        mCountDownView.setVisibility(View.VISIBLE);
 
         CountDownTimer countIn = new CountDownTimer(3000, TIMER_TICK) {
             /**
@@ -187,7 +201,7 @@ public class Timer {
              */
             @Override
             public void onTick(long millisUntilFinished) {
-                updateUI(millisUntilFinished);
+                mCountDownView.setText(Long.toString(millisUntilFinished / 1000));
             }
 
             /**
@@ -196,6 +210,7 @@ public class Timer {
              */
             @Override
             public void onFinish() {
+                mCountDownView.setVisibility(View.INVISIBLE);
                 play(timerDuration);
             }
 
@@ -211,9 +226,9 @@ public class Timer {
         mAlertDialogBuilder = new AlertDialog.Builder(mContext);
         String title = "Time's up!!!!";
         mAlertDialogBuilder.setTitle("Time's up!!!!");
-        mAlertDialogBuilder.setMessage("How did you do?");
+        mAlertDialogBuilder.setMessage("Remember to mark down scores!");
         mAlertDialogBuilder.setCancelable(true);
-        mAlertDialogBuilder.setPositiveButton("Play Again", new DialogInterface.OnClickListener() {
+        mAlertDialogBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             /**
              * A method to listen for user input in the dialogue box.
              * @param dialog The current dialogue interface.
