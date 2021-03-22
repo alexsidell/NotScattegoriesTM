@@ -132,7 +132,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.btnRestart:
-                timerView.setTextSize(50);
                 Toast.makeText(this, "Hold to Restart", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnSettings:
@@ -166,6 +165,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     timer = null;
                     clearAllViews();
                 }
+                timerView.setTextSize(50);
+
                 break;
             default:
                 break;
