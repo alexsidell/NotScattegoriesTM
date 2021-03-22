@@ -221,8 +221,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      * A method to clear all views. This allows for user consistency.
      */
     private void clearAllViews(){
-        timerView.setText("_");
-        letterView.setText("_");
+        timerView.setText("*");
+        letterView.setText("*");
         categoryView.removeAllViews();
     }
 
