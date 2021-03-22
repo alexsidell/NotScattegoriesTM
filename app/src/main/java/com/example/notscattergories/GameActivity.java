@@ -96,6 +96,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.countDownTimer:
+                if(!gameInProgress()){
+                    startGame();
+                }
                 break;
             case R.id.letterView:
                 break;
