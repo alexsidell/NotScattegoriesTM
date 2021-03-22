@@ -14,11 +14,15 @@ import java.util.HashMap;
 
 public class PlayerScores extends AppCompatActivity implements View.OnClickListener {
     HashMap<String, Integer> scores = new HashMap<String, Integer>();
+    String name;
+    int score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scores);
+
+
 
         Button back = findViewById(R.id.btnBackToGame);
 
