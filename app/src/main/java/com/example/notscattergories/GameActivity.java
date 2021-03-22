@@ -1,11 +1,13 @@
 package com.example.notscattergories;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -36,11 +38,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private TextView countView; //Store countInView
     private ProgressBar progressBar; //Store ProgressBar
 
-
     private Button btnPlayers; //Store the Players button
     private Button btnPlayPause; //Store the Play/Pause Button
     private Button btnRestart; //Store the restart Button
     private Button btnSettings; //Store the settings button
+
+    private SharedPreferences sharedPref;
+
+    AlertDialog.Builder mWelcomeDialogBuilder;
+    private boolean firstTime;
 
     private LinearLayout categoryView; //LinearLayout to store list of TextViews as categories.
 
@@ -87,8 +93,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
         getCategoriesFromFile();
+        initialiseWelcomeDialogue();
         initialiseSharedPreferences();
         clearAllViews(); //Ensures consistency in apps display
+
+        if(!firstTime){
+            AlertDialog alertDialog = mWelcomeDialogBuilder.create();
+            alertDialog.show();
+        }
     }
 
     /**
@@ -274,11 +286,29 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initialiseSharedPreferences() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("time", GAME_TIME);
         editor.putInt("categories", NUMBER_OF_CATS);
         editor.commit();
+    }
+
+    private void initialiseWelcomeDialogue() {
+        mWelcomeDialogBuilder = new AlertDialog.Builder(this);
+        mWelcomeDialogBuilder.setTitle("Welcome!");
+        mWelcomeDialogBuilder.setMessage("Welcome to NotScattergories, would you like to take a tour?");
+        mWelcomeDialogBuilder.setCancelable(true);
+        mWelcomeDialogBuilder.setPositiveButton("Tour", new DialogInterface.OnClickListener() {
+            /**
+             * A method to listen for user input in the dialogue box.
+             * @param dialog The current dialogue interface.
+             * @param which which option has been pressed.
+             */
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Can do something when button is pressed.
+            }
+        });
     }
 
 
