@@ -96,7 +96,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         setNumberOfSeconds(editor);
         setNumberOfCategories(editor);
         editor.commit();
-        Toast.makeText(getApplicationContext(), "DONE", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Changes Made", Toast.LENGTH_SHORT).show();
     }
 
 }
