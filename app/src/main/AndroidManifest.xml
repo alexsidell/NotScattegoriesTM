@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.notscattergories">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,10 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NotScattergories">
-        <activity android:name=".AnimalSounds"></activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:theme="@style/Theme.AppCompat.Dialog.Alert" />
+        <activity android:name=".SettingsActivity"
+            android:theme="@style/Theme.AppCompat.Dialog.Alert"
+            android:label="Settings"></activity>
         <activity
             android:name=".GameActivity"
             android:label="@string/title_activity_game"
@@ -27,7 +24,8 @@
         </activity>
         <activity
             android:name=".PlayerScores"
-            android:theme="@style/Theme.NotScattergories.NoActionBar" />
+            android:theme="@style/Theme.NotScattergories.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
