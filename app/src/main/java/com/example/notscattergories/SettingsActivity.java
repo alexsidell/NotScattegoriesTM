@@ -34,7 +34,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         submitBtn = findViewById(R.id.confirmSettingsBtn);
         submitBtn.setOnClickListener(this);
-
     }
 
     @Override
