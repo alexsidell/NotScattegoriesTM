@@ -124,7 +124,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnSettings:
                 //open settings popup
-                if(timer.isRunning() && gameInProgress()){
+                if(gameInProgress()){
                     timer.pause();
                     timerView.setText("pause");
                 }
