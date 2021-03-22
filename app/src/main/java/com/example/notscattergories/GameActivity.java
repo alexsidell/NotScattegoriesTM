@@ -171,7 +171,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btnRestart:
                 //Used to restart
-                if (timer != null) {
+                if (timer != null && !countDownInProgess()) {
                     timer.restart();
                     timer = null;
                     clearAllViews();
