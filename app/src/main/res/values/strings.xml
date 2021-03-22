@@ -20,4 +20,5 @@
     <string name="time_set_hint">Number Of Seconds</string>
     <string name="no_of_cats_hint">Number Of Categories</string>
     <string name="SettingsConfirmStr">MAKE CHANGES</string>
+    <string name="title_activity_animal_sound">AnimalSound</string>
 </resources>
