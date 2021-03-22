@@ -81,6 +81,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnPlayers.setOnClickListener(this);
         btnPlayPause.setOnClickListener(this);
         btnSettings.setOnClickListener(this);
+        btnRestart.setOnClickListener(this);
 
         btnRestart.setOnLongClickListener(this);
 
@@ -122,12 +123,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btnRestart:
-                //Used to restart
-                if (timer != null) {
-                    timer.restart();
-                    timer = null;
-                    clearAllViews();
-                }
+                Toast.makeText(this, "Hold to Restart", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnSettings:
                 //open settings popup
@@ -138,6 +134,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Intent settingsPop = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(settingsPop);
                 break;
+
             default:
                 break;
         }
