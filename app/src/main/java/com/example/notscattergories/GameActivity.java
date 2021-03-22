@@ -112,17 +112,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnPlayPause:
                 //Used to start, play, and pause the timer.
-                if(!gameInProgress()){
+                if(!gameInProgress() && !countDownInProgess()){
                     startGame();
 
                     Toast.makeText(getApplicationContext(), "Starting Game", Toast.LENGTH_SHORT).show();
-                }
-                else if(timer.isRunning()){
+                } else if(timer.isRunning()) {
                     timer.pause();
                     timerView.setTextSize(20);
                     timerView.setText("Game Paused");
                     Toast.makeText(getApplicationContext(), "Game Paused", Toast.LENGTH_SHORT).show();
-                } else {
+                } else if (!countDownInProgess()){
                     timer.resume();
                     timerView.setTextSize(50);
                     timerView.setText("");
@@ -229,6 +228,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private boolean countDownInProgess() {
+        if (timer != null){
+            return timer.isCountDownRunning();
+        } else {
+            return false;
+        }
+    }
 
     /**
      * A method to get a list of categories from the categories.txt file.
