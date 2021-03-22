@@ -97,7 +97,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         initialiseSharedPreferences();
         clearAllViews(); //Ensures consistency in apps display
 
-        if(!firstTime){
+        if(firstTime){
             AlertDialog alertDialog = mWelcomeDialogBuilder.create();
             alertDialog.show();
         }

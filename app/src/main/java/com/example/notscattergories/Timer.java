@@ -38,8 +38,6 @@ public class Timer {
     private boolean mCountDownRunning = false;
     private boolean mFinished = true;
 
-
-
     /**
      * A constructor for a timer object.
      * @param duration Duration for the timer
