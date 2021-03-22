@@ -33,6 +33,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView timerView; //Store the Timer text view
     private TextView letterView; //Store letterView
+    private TextView countView; //Store countInView
     private ProgressBar progressBar; //Store ProgressBar
 
 
@@ -65,6 +66,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         progressBar = findViewById(R.id.progressBar);
         letterView = findViewById(R.id.letterView);
         letterView.setOnClickListener(this);
+        countView = findViewById(R.id.countInTextView);
 
         allCategories = new ArrayList<>(); //Stores all categories from the categories.txt
 
@@ -152,7 +154,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int noOfCats = sharedPref.getInt("categories", NUMBER_OF_CATS);
         if (timer == null) {
             //Create a new timer object if one does not exist. Timer will be null if it has finished.
-            timer = new Timer(time, timerView, progressBar,categoryView, btnPlayPause, this);
+            timer = new Timer(time, timerView, countView, progressBar,categoryView, btnPlayPause, this);
         }
 
         if (!timer.isRunning()) {
