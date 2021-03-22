@@ -1,6 +1,7 @@
 package com.example.notscattergories;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
@@ -9,6 +10,7 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -44,6 +46,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnPlayPause; //Store the Play/Pause Button
     private Button btnRestart; //Store the restart Button
     private Button btnSettings; //Store the settings button
+
+    private SharedPreferences sharedPref;
+
+    AlertDialog.Builder mWelcomeDialogBuilder;
+    private boolean firstTime;
 
     private LinearLayout categoryView; //LinearLayout to store list of TextViews as categories.
 
@@ -94,8 +101,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
         getCategoriesFromFile();
+        initialiseWelcomeDialogue();
         initialiseSharedPreferences();
         clearAllViews(); //Ensures consistency in apps display
+
+        if(!firstTime){
+            AlertDialog alertDialog = mWelcomeDialogBuilder.create();
+            alertDialog.show();
+        }
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
@@ -136,17 +149,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnPlayPause:
                 //Used to start, play, and pause the timer.
-                if(!gameInProgress()){
+                if(!gameInProgress() && !countDownInProgess()){
                     startGame();
 
                     Toast.makeText(getApplicationContext(), "Starting Game", Toast.LENGTH_SHORT).show();
-                }
-                else if(timer.isRunning()){
+                } else if(timer.isRunning()) {
                     timer.pause();
                     timerView.setTextSize(20);
                     timerView.setText("Game Paused");
                     Toast.makeText(getApplicationContext(), "Game Paused", Toast.LENGTH_SHORT).show();
-                } else {
+                } else if (!countDownInProgess()){
                     timer.resume();
                     timerView.setTextSize(50);
                     timerView.setText("");
@@ -185,9 +197,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btnRestart:
                 //Used to restart
-
-
-                if (timer != null) {
+                if (timer != null && !countDownInProgess()) {
                     timer.restart();
                     timer = null;
                     clearAllViews();
@@ -256,6 +266,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private boolean countDownInProgess() {
+        if (timer != null){
+            return timer.isCountDownRunning();
+        } else {
+            return false;
+        }
+    }
 
     /**
      * A method to get a list of categories from the categories.txt file.
@@ -297,6 +314,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
             categoryView.addView(temp);
         }
+
     }
 
     private void initialiseSharedPreferences() {
@@ -307,6 +325,23 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         editor.commit();
     }
 
+    private void initialiseWelcomeDialogue() {
+        mWelcomeDialogBuilder = new AlertDialog.Builder(this);
+        mWelcomeDialogBuilder.setTitle("Welcome!");
+        mWelcomeDialogBuilder.setMessage("Welcome to NotScattergories, would you like to take a tour?");
+        mWelcomeDialogBuilder.setCancelable(true);
+        mWelcomeDialogBuilder.setPositiveButton("Tour", new DialogInterface.OnClickListener() {
+            /**
+             * A method to listen for user input in the dialogue box.
+             * @param dialog The current dialogue interface.
+             * @param which which option has been pressed.
+             */
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Can do something when button is pressed.
+            }
+        });
+    }
 
 
 }

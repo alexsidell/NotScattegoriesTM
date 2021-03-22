@@ -33,11 +33,15 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
                 Intent backToGame = new Intent(getApplicationContext(), GameActivity.class);
                 startActivity(backToGame);
                 break;
-
+            case R.id.btnAnimalSound:
+                Intent webSocket = new Intent(getApplicationContext(), AnimalSounds.class);
+                startActivity(webSocket);
         }
     }
 
     private void displayScores() {
 
-}
+    }
+
+
 }

@@ -35,6 +35,7 @@ public class Timer {
     private final int TIMER_TICK = 1000;
 
     private boolean mRunning = false;
+    private boolean mCountDownRunning = false;
     private boolean mFinished = true;
 
 
@@ -179,6 +180,12 @@ public class Timer {
     }
 
     /**
+     * Getter method for the mCountdownRunning variable.
+     * @return true if countdown timer has finished
+     */
+    public boolean isCountDownRunning() { return mCountDownRunning; }
+
+    /**
      * A method to update the UI. This also adjusts milliseconds to seconds, and updates the
      * progress bar.
      * @param millisUntilFinished Time left on timer.
@@ -192,6 +199,7 @@ public class Timer {
     private void countIn(long timerDuration){
         mCategoryView.setVisibility(View.INVISIBLE);
         mCountDownView.setVisibility(View.VISIBLE);
+        mCountDownRunning = true;
 
         CountDownTimer countIn = new CountDownTimer(3000, TIMER_TICK) {
             /**
@@ -211,6 +219,7 @@ public class Timer {
             @Override
             public void onFinish() {
                 mCountDownView.setVisibility(View.INVISIBLE);
+                mCountDownRunning = false;
                 play(timerDuration);
             }
 
