@@ -151,8 +151,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 //Used to start, play, and pause the timer.
                 if(!gameInProgress() && !countDownInProgess()){
                     startGame();
-
                     Toast.makeText(getApplicationContext(), "Starting Game", Toast.LENGTH_SHORT).show();
+                    soundPool.play(sound1, 1, 1, 0, 0, 1);
                 } else if(timer.isRunning()) {
                     timer.pause();
                     timerView.setTextSize(20);
