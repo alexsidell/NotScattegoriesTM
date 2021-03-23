@@ -70,7 +70,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 Toast.makeText(getApplicationContext(), "Timer set to maximum (180 secs).", Toast.LENGTH_SHORT).show();
             }
 
-            editor.putInt("time", (noOfSeconds * 1000));
+            editor.putInt("time", ((noOfSeconds) * 1000));
         }
     }
 
