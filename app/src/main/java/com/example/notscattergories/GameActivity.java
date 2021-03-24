@@ -1,32 +1,30 @@
 package com.example.notscattergories;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.material.snackbar.Snackbar;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import smartdevelop.ir.eram.showcaseviewlib.GuideView;
+import smartdevelop.ir.eram.showcaseviewlib.config.DismissType;
+
 
 /**
  * A class for activity_game.xml
@@ -56,6 +54,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private final int GAME_TIME = 90000;
     private final int NUMBER_OF_CATS = 12;
+
+    private GuideView mGuideView;
+    private GuideView.Builder builder;
 
 
     /**
@@ -97,7 +98,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         initialiseSharedPreferences();
         clearAllViews(); //Ensures consistency in apps display
 
-        if(firstTime){
+
+
+
+        if(!firstTime){
             AlertDialog alertDialog = mWelcomeDialogBuilder.create();
             alertDialog.show();
         }
@@ -157,6 +161,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             default:
+
                 break;
         }
     }
@@ -312,9 +317,48 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
              */
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //Can do something when button is pressed.
+                startTour();
             }
         });
+    }
+
+    private void startTour(){
+        System.out.println("tourstarted, hold your horses");
+
+        builder = new GuideView.Builder(this);
+        builder.setTitle("title");
+        builder.setContentText("text");
+        builder.setGravity(smartdevelop.ir.eram.showcaseviewlib.config.Gravity.center);
+        builder.setDismissType(DismissType.anywhere);
+        // builder.setContentSpan((Spannable) Html.fromHtml("<font color='#3700B3'>testing spannable</p>"));
+        builder.setTargetView(btnPlayers).build();
+
+        /*builder.setGuideListener(new GuideListener() {
+            @Override
+            public void onDismiss(View view) {
+                switch (view.getId()) {
+                    case R.id.textView1:
+                        builder.setTitle("button 1 Title");
+                        builder.setContentText("button 1 text............");
+                        builder.setTargetView(btn1).build();
+
+                        break;
+                    case R.id.button1:
+                        builder.setTitle("button 2 Title");
+                        builder.setContentText("button 2 text............");
+                        builder.setTargetView(btn2).build();
+
+                        break;
+                    case R.id.button2:
+                        prefManager.setFirstTimeLaunch(false);
+
+                        return;
+
+                }*/
+
+
+        mGuideView = builder.build();
+        mGuideView.show();
     }
 
 
