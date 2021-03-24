@@ -189,7 +189,7 @@ public class Timer {
      * @param millisUntilFinished Time left on timer.
      */
     private void updateUI(long millisUntilFinished){
-        mTimerView.setText(Long.toString(millisUntilFinished / 1000));
+        mTimerView.setText(Long.toString((millisUntilFinished / 1000)+1));
         int progress = (int) ((millisUntilFinished) / 1000);
         mProgressBar.setProgress(progress);
     }
@@ -207,7 +207,7 @@ public class Timer {
              */
             @Override
             public void onTick(long millisUntilFinished) {
-                mCountDownView.setText(Long.toString(millisUntilFinished / 1000));
+                mCountDownView.setText(Long.toString(((millisUntilFinished) / 1000)+1));
             }
 
             /**

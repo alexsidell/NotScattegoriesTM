@@ -3,6 +3,9 @@ package com.example.notscattergories;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -37,6 +40,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private TextView countView; //Store countInView
     private ProgressBar progressBar; //Store ProgressBar
 
+
     private Button btnPlayers; //Store the Players button
     private Button btnPlayPause; //Store the Play/Pause Button
     private Button btnRestart; //Store the restart Button
@@ -55,6 +59,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private final int GAME_TIME = 90000;
     private final int NUMBER_OF_CATS = 12;
+    private SoundPool soundPool;
+    private int sound1;
+
 
     private GuideView mGuideView;
     private GuideView.Builder builder;
@@ -94,6 +101,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnRestart.setOnLongClickListener(this);
 
 
+
         getCategoriesFromFile();
         initialiseWelcomeDialogue();
         initialiseSharedPreferences();
@@ -104,6 +112,23 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             AlertDialog alertDialog = mWelcomeDialogBuilder.create();
             alertDialog.show();
         }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build();
+
+            soundPool = new SoundPool.Builder()
+                    .setMaxStreams(1)
+                    .setAudioAttributes(audioAttributes)
+                    .build();
+        } else {
+            soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
+        }
+
+        sound1 = soundPool.load(this, R.raw.sound1, 1);
+
     }
 
     /**
@@ -129,8 +154,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 //Used to start, play, and pause the timer.
                 if(!gameInProgress() && !countDownInProgess()){
                     startGame();
-
                     Toast.makeText(getApplicationContext(), "Starting Game", Toast.LENGTH_SHORT).show();
+                    soundPool.play(sound1, 1, 1, 0, 0, 1);
                 } else if(timer.isRunning()) {
                     timer.pause();
                     timerView.setTextSize(20);
@@ -141,6 +166,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     timerView.setTextSize(50);
                     timerView.setText("");
                     Toast.makeText(getApplicationContext(), "Resuming Game", Toast.LENGTH_SHORT).show();
+                    soundPool.play(sound1, 1, 1, 0, 0, 1);
                 }
 
 
@@ -289,7 +315,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initialiseSharedPreferences() {
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("time", GAME_TIME);
         editor.putInt("categories", NUMBER_OF_CATS);

@@ -34,7 +34,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         submitBtn = findViewById(R.id.confirmSettingsBtn);
         submitBtn.setOnClickListener(this);
-
     }
 
     @Override
@@ -63,14 +62,15 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         if (!isEmpty(noOfSecondsInput)) {
             noOfSeconds = Integer.parseInt(noOfSecondsInput.getText().toString());
 
-            if (noOfSeconds < 0) {
-                Toast.makeText(getApplicationContext(), "Time cannot be negative.", Toast.LENGTH_SHORT).show();
+            if (noOfSeconds < 10) {
+                noOfSeconds = 10;
+                Toast.makeText(getApplicationContext(), "Timer set to minimum (10 secs).", Toast.LENGTH_SHORT).show();
             } else if (noOfSeconds > 180) {
                 noOfSeconds = 180;
-                Toast.makeText(getApplicationContext(), "Number of seconds set to 180 seconds.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Timer set to maximum (180 secs).", Toast.LENGTH_SHORT).show();
             }
 
-            editor.putInt("time", (noOfSeconds * 1000));
+            editor.putInt("time", ((noOfSeconds) * 1000));
         }
     }
 
@@ -78,11 +78,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         if (!isEmpty(noOfCategoriesInput)) {
             noOfCategories = Integer.parseInt(noOfCategoriesInput.getText().toString());
 
-            if (noOfCategories < 0) {
-                Toast.makeText(getApplicationContext(), "Number of categories cannot be negative.", Toast.LENGTH_SHORT).show();
+            if (noOfCategories < 3) {
+                noOfCategories = 3;
+                Toast.makeText(getApplicationContext(), "Number of categories set to minimum (3).", Toast.LENGTH_SHORT).show();
             } else if (noOfCategories > 12) {
                 noOfCategories = 12;
-                Toast.makeText(getApplicationContext(), "Number of categories set to 12.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Number of categories set to maximum (12).", Toast.LENGTH_SHORT).show();
             }
 
             editor.putInt("categories", (noOfCategories));
@@ -95,7 +96,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         setNumberOfSeconds(editor);
         setNumberOfCategories(editor);
         editor.commit();
-        Toast.makeText(getApplicationContext(), "DONE", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Changes Made", Toast.LENGTH_SHORT).show();
     }
 
 }
