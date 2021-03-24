@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,11 +34,10 @@ import smartdevelop.ir.eram.showcaseviewlib.listener.GuideListener;
  */
 public class GameActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
-    private TextView timerView; //Store the Timer text view
-    private TextView letterView; //Store letterView
-    private TextView countView; //Store countInView
-    private ProgressBar progressBar; //Store ProgressBar
-
+    private TextView mTimerView; //Store the Timer text view
+    private TextView mLetterView; //Store letterView
+    private TextView mCountView; //Store countInView
+    private ProgressBar mProgressBar; //Store ProgressBar
 
     private Button btnPlayers; //Store the Players button
     private Button btnPlayPause; //Store the Play/Pause Button
@@ -49,7 +47,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private SharedPreferences sharedPref;
 
     AlertDialog.Builder mWelcomeDialogBuilder;
-    private boolean firstTime;
+    private boolean mFirstTime;
 
     private LinearLayout categoryView; //LinearLayout to store list of TextViews as categories.
 
@@ -62,10 +60,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private SoundPool soundPool;
     private int sound1;
 
-
     private GuideView mGuideView;
     private GuideView.Builder builder;
 
+    private boolean eyesOpen = true;
 
     /**
      * A method that is called when activity is created.
@@ -76,12 +74,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        timerView = findViewById(R.id.countDownTimer);
-        timerView.setOnClickListener(this);
-        progressBar = findViewById(R.id.progressBar);
-        letterView = findViewById(R.id.letterView);
-        letterView.setOnClickListener(this);
-        countView = findViewById(R.id.countInTextView);
+        mTimerView = findViewById(R.id.countDownTimer);
+        mTimerView.setOnClickListener(this);
+        mProgressBar = findViewById(R.id.progressBar);
+        mLetterView = findViewById(R.id.letterView);
+        mLetterView.setOnClickListener(this);
+        mCountView = findViewById(R.id.countInTextView);
 
         allCategories = new ArrayList<>(); //Stores all categories from the categories.txt
 
@@ -100,15 +98,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         btnRestart.setOnLongClickListener(this);
 
-
-
         getCategoriesFromFile();
         initialiseWelcomeDialogue();
         initialiseSharedPreferences();
         clearAllViews(); //Ensures consistency in apps display
 
-
-        if(!firstTime){
+        if(!mFirstTime){ //@TODO: This should be changed based on shared preferences
             AlertDialog alertDialog = mWelcomeDialogBuilder.create();
             alertDialog.show();
         }
@@ -144,6 +139,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.letterView:
+                blink();
                 break;
             case R.id.btnPlayers:
                 //Show player info
@@ -158,17 +154,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     soundPool.play(sound1, 1, 1, 0, 0, 1);
                 } else if(timer.isRunning()) {
                     timer.pause();
-                    timerView.setTextSize(20);
-                    timerView.setText("Game Paused");
+                    mTimerView.setTextSize(20);
+                    mTimerView.setText("Game Paused");
                     Toast.makeText(getApplicationContext(), "Game Paused", Toast.LENGTH_SHORT).show();
                 } else if (!countDownInProgess()){
                     timer.resume();
-                    timerView.setTextSize(50);
-                    timerView.setText("");
+                    mTimerView.setTextSize(50);
+                    mTimerView.setText("");
                     Toast.makeText(getApplicationContext(), "Resuming Game", Toast.LENGTH_SHORT).show();
                     soundPool.play(sound1, 1, 1, 0, 0, 1);
                 }
-
 
                 break;
             case R.id.btnRestart:
@@ -178,8 +173,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 //open settings popup
                 if(gameInProgress()){
                     timer.pause();
-                    timerView.setText("Game Paused");
-                    timerView.setTextSize(20);
+                    mTimerView.setText("Game Paused");
+                    mTimerView.setTextSize(20);
                 }
                 Intent settingsPop = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(settingsPop);
@@ -206,7 +201,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     timer = null;
                     clearAllViews();
                 }
-                timerView.setTextSize(50);
+                mTimerView.setTextSize(50);
 
                 break;
             default:
@@ -224,7 +219,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int noOfCats = sharedPref.getInt("categories", NUMBER_OF_CATS);
         if (timer == null) {
             //Create a new timer object if one does not exist. Timer will be null if it has finished.
-            timer = new Timer(time, timerView, countView, progressBar,categoryView, btnPlayPause, this);
+            timer = new Timer(time, mTimerView, mCountView, mProgressBar,categoryView, btnPlayPause, this);
         }
 
         if (!timer.isRunning()) {
@@ -244,11 +239,24 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      * A method to clear all views. This allows for user consistency.
      */
     private void clearAllViews(){
-        timerView.setText("*");
-        letterView.setText("*");
+        mTimerView.setText("*");
+        mLetterView.setText("*");
         categoryView.removeAllViews();
     }
 
+    private void blink() {
+        if (!gameInProgress()) {
+            if (eyesOpen) {
+                mTimerView.setText("_");
+                mLetterView.setText("_");
+                eyesOpen = false;
+            } else {
+                mTimerView.setText("*");
+                mLetterView.setText("*");
+                eyesOpen = true;
+            }
+        }
+    }
 
     /**
      * A method to check whether a game is in progress. It checks whether the timer has finished.
@@ -292,7 +300,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      * @param letter letter to be displayed.
      */
     private void displayLetter(String letter) {
-        letterView.setText(letter);
+        mLetterView.setText(letter);
     }
 
     /**
@@ -356,7 +364,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         builder.setDismissType(DismissType.anywhere);
         builder.setCircleIndicatorSize(5);
 
-        builder.setTargetView(letterView).build();
+        builder.setTargetView(mLetterView).build();
 
         builder.setGuideListener(new GuideListener() {
             @Override
@@ -365,13 +373,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.letterView:
                         builder.setTitle("Countdown timer");
                         builder.setContentText("The time left will be displayed here");
-                        builder.setTargetView(timerView).build();
+                        builder.setTargetView(mTimerView).build();
 
                         break;
                     case R.id.countDownTimer:
                         builder.setTitle("Progress Bar");
                         builder.setContentText("A visual representation of time left.");
-                        builder.setTargetView(progressBar).build();
+                        builder.setTargetView(mProgressBar).build();
 
                         break;
                     case R.id.progressBar:

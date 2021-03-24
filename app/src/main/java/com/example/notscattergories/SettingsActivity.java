@@ -44,6 +44,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.rules:
                 showRules();
+            case R.id.tour:
+                //TODO: reset shared preferences
+                break;
             default:
                 break;
         }
