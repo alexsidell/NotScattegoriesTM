@@ -32,8 +32,6 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
-
-
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -47,6 +45,6 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
     //Welcome screen
-    implementation 'com.github.mreram:showcaseview:1.1'
+    implementation 'com.github.mreram:showcaseview:1.2.0'
 
 }

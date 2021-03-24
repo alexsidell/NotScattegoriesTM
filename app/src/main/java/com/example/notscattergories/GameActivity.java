@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import smartdevelop.ir.eram.showcaseviewlib.GuideView;
 import smartdevelop.ir.eram.showcaseviewlib.config.DismissType;
+import smartdevelop.ir.eram.showcaseviewlib.listener.GuideListener;
 
 
 /**
@@ -97,8 +98,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         initialiseWelcomeDialogue();
         initialiseSharedPreferences();
         clearAllViews(); //Ensures consistency in apps display
-
-
 
 
         if(!firstTime){
@@ -189,13 +188,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
         return false;
     }
-
-
-    private void showRules() {
-        DialogFragment newFragment = new RulesDialog();
-        newFragment.show(getSupportFragmentManager(), "rules");
-    }
-
 
     /**
      * A method to start a game of NotScattegories.
@@ -323,42 +315,84 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void startTour(){
-        System.out.println("tourstarted, hold your horses");
+        //Simulates a game for the tour
+        Game game = new Game(6, allCategories.size());
+        game.start();
 
+        displayLetter(game.getLetter());
+        displayCategories(game.getCategoryIndexes());
+
+        //Start of tour code
         builder = new GuideView.Builder(this);
-        builder.setTitle("title");
-        builder.setContentText("text");
+        builder.setTitle("Letter");
+        builder.setContentText("The selected letter will be displayed here. ");
         builder.setGravity(smartdevelop.ir.eram.showcaseviewlib.config.Gravity.center);
         builder.setDismissType(DismissType.anywhere);
-        // builder.setContentSpan((Spannable) Html.fromHtml("<font color='#3700B3'>testing spannable</p>"));
-        builder.setTargetView(btnPlayers).build();
+        builder.setCircleIndicatorSize(5);
 
-        /*builder.setGuideListener(new GuideListener() {
+        builder.setTargetView(letterView).build();
+
+        builder.setGuideListener(new GuideListener() {
             @Override
             public void onDismiss(View view) {
                 switch (view.getId()) {
-                    case R.id.textView1:
-                        builder.setTitle("button 1 Title");
-                        builder.setContentText("button 1 text............");
-                        builder.setTargetView(btn1).build();
+                    case R.id.letterView:
+                        builder.setTitle("Countdown timer");
+                        builder.setContentText("The time left will be displayed here");
+                        builder.setTargetView(timerView).build();
 
                         break;
-                    case R.id.button1:
-                        builder.setTitle("button 2 Title");
-                        builder.setContentText("button 2 text............");
-                        builder.setTargetView(btn2).build();
+                    case R.id.countDownTimer:
+                        builder.setTitle("Progress Bar");
+                        builder.setContentText("A visual representation of time left.");
+                        builder.setTargetView(progressBar).build();
 
                         break;
-                    case R.id.button2:
-                        prefManager.setFirstTimeLaunch(false);
+                    case R.id.progressBar:
+                        builder.setTitle("Categories");
+                        builder.setContentText("A list of categories will be displayed here.");
+                        builder.setTargetView(categoryView).build();
 
+                        break;
+                    case R.id.categoryLayoutView:
+                        builder.setTitle("Players");
+                        builder.setContentText("Here you can input player names and scores.");
+                        builder.setTargetView(btnPlayers).build();
+
+                        break;
+                    case R.id.btnPlayers:
+                        builder.setTitle("Play/Pause");
+                        builder.setContentText("Press to start and pause a game.");
+                        builder.setTargetView(btnPlayPause).build();
+
+                        break;
+                    case R.id.btnPlayPause:
+                        builder.setTitle("Restart");
+                        builder.setContentText("Hold to restart the game");
+                        builder.setTargetView(btnRestart).build();
+
+                        break;
+                    case R.id.btnRestart:
+                        builder.setTitle("Settings");
+                        builder.setContentText("Adjust timer duration and number of categories. " +
+                                "You can also take this tour again");
+                        builder.setTargetView(btnSettings).build();
+
+                        break;
+                    default:
+                        clearAllViews();
                         return;
 
-                }*/
+                }
 
+                mGuideView = builder.build();
+                mGuideView.show();
+            }
 
+        });
         mGuideView = builder.build();
         mGuideView.show();
+
     }
 
 
