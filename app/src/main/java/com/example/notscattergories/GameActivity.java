@@ -1,6 +1,5 @@
 package com.example.notscattergories;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,27 +8,27 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.material.snackbar.Snackbar;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import smartdevelop.ir.eram.showcaseviewlib.GuideView;
+import smartdevelop.ir.eram.showcaseviewlib.config.DismissType;
+import smartdevelop.ir.eram.showcaseviewlib.listener.GuideListener;
+
 
 /**
  * A class for activity_game.xml
@@ -63,6 +62,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private SoundPool soundPool;
     private int sound1;
 
+
+    private GuideView mGuideView;
+    private GuideView.Builder builder;
 
 
     /**
@@ -105,7 +107,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         initialiseSharedPreferences();
         clearAllViews(); //Ensures consistency in apps display
 
-        if(firstTime){
+
+        if(!firstTime){
             AlertDialog alertDialog = mWelcomeDialogBuilder.create();
             alertDialog.show();
         }
@@ -183,6 +186,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             default:
+
                 break;
         }
     }
@@ -210,13 +214,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
         return false;
     }
-
-
-    private void showRules() {
-        DialogFragment newFragment = new RulesDialog();
-        newFragment.show(getSupportFragmentManager(), "rules");
-    }
-
 
     /**
      * A method to start a game of NotScattegories.
@@ -338,9 +335,90 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
              */
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //Can do something when button is pressed.
+                startTour();
             }
         });
+    }
+
+    private void startTour(){
+        //Simulates a game for the tour
+        Game game = new Game(6, allCategories.size());
+        game.start();
+
+        displayLetter(game.getLetter());
+        displayCategories(game.getCategoryIndexes());
+
+        //Start of tour code
+        builder = new GuideView.Builder(this);
+        builder.setTitle("Letter");
+        builder.setContentText("The selected letter will be displayed here. ");
+        builder.setGravity(smartdevelop.ir.eram.showcaseviewlib.config.Gravity.center);
+        builder.setDismissType(DismissType.anywhere);
+        builder.setCircleIndicatorSize(5);
+
+        builder.setTargetView(letterView).build();
+
+        builder.setGuideListener(new GuideListener() {
+            @Override
+            public void onDismiss(View view) {
+                switch (view.getId()) {
+                    case R.id.letterView:
+                        builder.setTitle("Countdown timer");
+                        builder.setContentText("The time left will be displayed here");
+                        builder.setTargetView(timerView).build();
+
+                        break;
+                    case R.id.countDownTimer:
+                        builder.setTitle("Progress Bar");
+                        builder.setContentText("A visual representation of time left.");
+                        builder.setTargetView(progressBar).build();
+
+                        break;
+                    case R.id.progressBar:
+                        builder.setTitle("Categories");
+                        builder.setContentText("A list of categories will be displayed here.");
+                        builder.setTargetView(categoryView).build();
+
+                        break;
+                    case R.id.categoryLayoutView:
+                        builder.setTitle("Players");
+                        builder.setContentText("Here you can input player names and scores.");
+                        builder.setTargetView(btnPlayers).build();
+
+                        break;
+                    case R.id.btnPlayers:
+                        builder.setTitle("Play/Pause");
+                        builder.setContentText("Press to start and pause a game.");
+                        builder.setTargetView(btnPlayPause).build();
+
+                        break;
+                    case R.id.btnPlayPause:
+                        builder.setTitle("Restart");
+                        builder.setContentText("Hold to restart the game");
+                        builder.setTargetView(btnRestart).build();
+
+                        break;
+                    case R.id.btnRestart:
+                        builder.setTitle("Settings");
+                        builder.setContentText("Adjust timer duration and number of categories. " +
+                                "You can also take this tour again");
+                        builder.setTargetView(btnSettings).build();
+
+                        break;
+                    default:
+                        clearAllViews();
+                        return;
+
+                }
+
+                mGuideView = builder.build();
+                mGuideView.show();
+            }
+
+        });
+        mGuideView = builder.build();
+        mGuideView.show();
+
     }
 
 
