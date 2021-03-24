@@ -63,6 +63,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private GuideView mGuideView;
     private GuideView.Builder builder;
 
+    private boolean eyesOpen = true;
+
     /**
      * A method that is called when activity is created.
      * @param savedInstanceState
@@ -137,6 +139,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.letterView:
+                blink();
                 break;
             case R.id.btnPlayers:
                 //Show player info
@@ -241,6 +244,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         categoryView.removeAllViews();
     }
 
+    private void blink() {
+        if (!gameInProgress()) {
+            if (eyesOpen) {
+                mTimerView.setText("_");
+                mLetterView.setText("_");
+                eyesOpen = false;
+            } else {
+                mTimerView.setText("*");
+                mLetterView.setText("*");
+                eyesOpen = true;
+            }
+        }
+    }
 
     /**
      * A method to check whether a game is in progress. It checks whether the timer has finished.
