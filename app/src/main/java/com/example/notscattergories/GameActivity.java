@@ -149,8 +149,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnPlayers:
                 //Show player info
+                int LAUNCH_SECOND_ACTIVITY = 1;
                 Intent playerScores = new Intent(getApplicationContext(), PlayerScores.class);
-                startActivity(playerScores);
+                startActivityForResult(playerScores, LAUNCH_SECOND_ACTIVITY);
+                timer.pause();
                 break;
             case R.id.btnPlayPause:
                 //Used to start, play, and pause the timer.
