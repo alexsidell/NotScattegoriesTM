@@ -390,12 +390,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.progressBar:
                         builder.setTitle("Categories");
                         builder.setContentText("A list of categories will be displayed here.");
+                        builder.setIndicatorHeight(5);
                         builder.setTargetView(categoryView).build();
 
                         break;
                     case R.id.categoryLayoutView:
                         builder.setTitle("Players");
                         builder.setContentText("Here you can input player names and scores.");
+                        builder.setIndicatorHeight(50);
                         builder.setTargetView(btnPlayers).build();
 
                         break;
