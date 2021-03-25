@@ -45,6 +45,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.confirmSettingsBtn:
                 makeNewChanges();
+                finish();
+                GameActivity.getInstance().restartActivity();
                 break;
             case R.id.rules:
                 showRules();
@@ -54,6 +56,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 editor.putBoolean("first_time", true);
                 editor.commit();
 
+                finish();
                 GameActivity.getInstance().startTour();
 
                 break;
@@ -112,6 +115,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         setNumberOfCategories(editor);
         editor.commit();
         Toast.makeText(getApplicationContext(), "Changes Made", Toast.LENGTH_SHORT).show();
+
     }
 
 }
