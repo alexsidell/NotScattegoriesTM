@@ -58,6 +58,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private final int NUMBER_OF_CATS = 12;
     private SoundPool soundPool;
     private int sound1;
+    private int sound2;
+
 
     private GuideView mGuideView;
     private GuideView.Builder builder;
@@ -106,6 +108,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         initialiseSharedPreferences();
         clearAllViews(); //Ensures consistency in apps display
 
+
         startTutorialIfFirstTime();
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -123,6 +126,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         sound1 = soundPool.load(this, R.raw.sound1, 1);
+        sound2 = soundPool.load(this, R.raw.sound2, 1);
+
 
     }
 
@@ -229,6 +234,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             displayLetter(game.getLetter());
             displayCategories(game.getCategoryIndexes());
         }
+
+
     }
 
 
@@ -285,6 +292,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open("categories.txt")));
             String line;
+
             while ((line = reader.readLine()) != null) {
                 allCategories.add(line);
             }
@@ -314,7 +322,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         for (int i = 0; i < cats.length; i++) {
             TextView temp = new TextView(this);
-            temp.setText(allCategories.get(cats[i]));
+            if(i < 9) {
+                temp.setText((i + 1) + "     " + allCategories.get(cats[i]));
+            } else {
+                temp.setText((i + 1) + "   " + allCategories.get(cats[i]));
+            }
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 temp.setTextAppearance(R.style.catText);
             }
@@ -326,10 +339,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void initialiseSharedPreferences() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("time", GAME_TIME);
-        editor.putInt("categories", NUMBER_OF_CATS);
         if (!sharedPref.contains("first_time")) {
             editor.putBoolean("first_time", true);
+            editor.putInt("time", GAME_TIME);
+            editor.putInt("categories", NUMBER_OF_CATS);
         }
         editor.commit();
     }
@@ -354,6 +367,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void startTour() {
         //Simulates a game for the tour
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("first_time", false);
+        editor.commit();
         Game game = new Game(6, allCategories.size());
         game.start();
 

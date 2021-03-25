@@ -1,8 +1,12 @@
 package com.example.notscattergories;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +43,7 @@ public class Timer {
     private boolean mCountDownRunning = false;
     private boolean mFinished = true;
 
+
     /**
      * A constructor for a timer object.
      * @param duration Duration for the timer
@@ -65,8 +70,6 @@ public class Timer {
         progressAnimator = ObjectAnimator.ofInt(seconds, "progress", 0,1);
         progressAnimator.setDuration(mDuration);
         progressAnimator.start();
-
-
 
         mFinished = false;
     }
@@ -102,6 +105,7 @@ public class Timer {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     mTimeLeft = millisUntilFinished;
+                    setTimeLeft((int) millisUntilFinished);
                     colourChecker((int) millisUntilFinished);
                     updateUI(millisUntilFinished);
                 }
@@ -125,6 +129,15 @@ public class Timer {
             }.start();
         }
     }
+
+    public void setTimeLeft(long i){
+        mTimeLeft = i;
+    }
+
+    public long getTimeLeft(){
+        return mTimeLeft;
+    }
+
 
     /**
      * A method to pause the timer, every tick the timer's value is stored in the class variable
@@ -239,6 +252,8 @@ public class Timer {
         if (i < 5000) {
             mProgressBar.getProgressDrawable().setColorFilter(
                     Color.parseColor("#ff6961"), android.graphics.PorterDuff.Mode.SRC_IN);
+
+
         }else{
             mProgressBar.getProgressDrawable().setColorFilter(
                     Color.parseColor("#81008891"), android.graphics.PorterDuff.Mode.SRC_IN);
