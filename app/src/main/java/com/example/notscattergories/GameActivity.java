@@ -64,6 +64,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private boolean eyesOpen = true;
 
+    private static GameActivity mInstance;
+
     /**
      * A method that is called when activity is created.
      *
@@ -97,6 +99,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnRestart.setOnClickListener(this);
 
         btnRestart.setOnLongClickListener(this);
+
+        mInstance = this;
 
         getCategoriesFromFile();
         initialiseWelcomeDialogue();
@@ -352,7 +356,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void startTour() {
+    public void startTour() {
         //Simulates a game for the tour
         Game game = new Game(6, allCategories.size());
         game.start();
@@ -451,5 +455,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
      }
 
+     public static GameActivity getInstance(){
+        return mInstance;
+     }
+
+     public void restartActivity(){
+         finish();
+         Intent runTutorial = new Intent(getApplicationContext(), GameActivity.class);
+         startActivity(runTutorial);
+     }
 
 }
