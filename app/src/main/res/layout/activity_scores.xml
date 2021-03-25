@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:layout_width="match_parent"
@@ -32,4 +33,36 @@
         android:layout_marginBottom="20dp"
         android:text="Back to Game"
         />
+
+    <ScrollView
+        android:id="@+id/playerListScroll"
+        android:layout_width="331dp"
+        android:layout_height="588dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="71dp"
+        android:scrollbarStyle="insideInset">
+
+        <LinearLayout
+            android:id="@+id/playerListOuter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/playerListInner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnAddPlayer"
+                android:layout_width="56dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:icon="@drawable/ic_add" />
+
+        </LinearLayout>
+
+    </ScrollView>
 </RelativeLayout>
