@@ -342,10 +342,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void initialiseSharedPreferences() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("time", GAME_TIME);
-        editor.putInt("categories", NUMBER_OF_CATS);
         if (!sharedPref.contains("first_time")) {
             editor.putBoolean("first_time", true);
+            editor.putInt("time", GAME_TIME);
+            editor.putInt("categories", NUMBER_OF_CATS);
         }
         editor.commit();
     }
@@ -370,6 +370,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void startTour() {
         //Simulates a game for the tour
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("first_time", false);
+        editor.commit();
         Game game = new Game(6, allCategories.size());
         game.start();
 
