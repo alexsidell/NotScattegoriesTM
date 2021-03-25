@@ -149,10 +149,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnPlayers:
                 //Show player info
-                int LAUNCH_SECOND_ACTIVITY = 1;
-                Intent playerScores = new Intent(getApplicationContext(), PlayerScores.class);
-                startActivityForResult(playerScores, LAUNCH_SECOND_ACTIVITY);
-                timer.pause();
+
+                if (gameInProgress()) {
+                    timer.pause();
+
+                } else if (countDownInProgess()) {
+                    timer.restart();
+                                    }
+                    launchPlayers();
+
+
                 break;
             case R.id.btnPlayPause:
                 //Used to start, play, and pause the timer.
@@ -238,6 +244,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
+    }
+
+    /**
+     * Method for launching the players scores page
+     */
+    public void launchPlayers() {
+        int LAUNCH_SECOND_ACTIVITY = 1;
+        Intent playerScores = new Intent(getApplicationContext(), PlayerScores.class);
+        startActivityForResult(playerScores, LAUNCH_SECOND_ACTIVITY);
     }
 
 
