@@ -55,8 +55,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="43dp"
             android:layout_marginRight="43dp"
-            android:progressDrawable="@drawable/gradient"
-            />
+            android:progressTint="#81008891"
+            android:progressTintMode="src_in"
+             />
 
     </RelativeLayout>
 

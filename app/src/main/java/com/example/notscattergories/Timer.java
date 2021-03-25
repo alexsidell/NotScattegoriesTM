@@ -2,6 +2,7 @@ package com.example.notscattergories;
 
 import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
@@ -101,7 +102,7 @@ public class Timer {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     mTimeLeft = millisUntilFinished;
-
+                    colourChecker((int) millisUntilFinished);
                     updateUI(millisUntilFinished);
                 }
 
@@ -208,6 +209,7 @@ public class Timer {
             @Override
             public void onTick(long millisUntilFinished) {
                 mCountDownView.setText(Long.toString(((millisUntilFinished) / 1000)+1));
+
             }
 
             /**
@@ -222,6 +224,21 @@ public class Timer {
             }
 
         }.start();
+    }
+    /**
+     * A method that will check the time left and change the
+     * Progress Bar colour to Red on last 5 seconds
+     * @param i
+     */
+    private void colourChecker(int i){
+        if (i < 5000) {
+            mProgressBar.getProgressDrawable().setColorFilter(
+                    Color.parseColor("#ff6961"), android.graphics.PorterDuff.Mode.SRC_IN);
+        }else{
+            mProgressBar.getProgressDrawable().setColorFilter(
+                    Color.parseColor("#81008891"), android.graphics.PorterDuff.Mode.SRC_IN);
+        }
+
     }
 
 
@@ -247,4 +264,6 @@ public class Timer {
             }
         });
     }
+
+
 }
