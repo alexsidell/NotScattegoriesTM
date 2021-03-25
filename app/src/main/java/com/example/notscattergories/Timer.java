@@ -132,6 +132,8 @@ public class Timer {
      */
     public void pause(){
         if (mCountTimer != null) {
+            //mTimerView.setTextSize(50);
+            mTimerView.setText("ll");
             mCategoryView.setVisibility(View.INVISIBLE);
             mCountTimer.cancel();
             mCountTimer = null;
@@ -146,6 +148,8 @@ public class Timer {
      * This creates another timer from where the previous one was paused.
      */
     public void resume(){
+        //mTimerView.setTextSize(50);
+        mTimerView.setText("");
         countIn(mTimeLeft);
     }
 
@@ -156,6 +160,7 @@ public class Timer {
      * presses the play button.
      */
     public void restart(){
+            //mTimerView.setTextSize(50);
             pause();
             mTimeLeft = mDuration;
             updateUI(mDuration);

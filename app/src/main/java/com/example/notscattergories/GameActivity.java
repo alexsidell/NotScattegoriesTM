@@ -155,13 +155,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     soundPool.play(sound1, 1, 1, 0, 0, 1);
                 } else if (timer.isRunning()) {
                     timer.pause();
-                    mTimerView.setTextSize(20);
-                    mTimerView.setText("Game Paused");
+
                     Toast.makeText(getApplicationContext(), "Game Paused", Toast.LENGTH_SHORT).show();
                 } else if (!countDownInProgess()) {
                     timer.resume();
-                    mTimerView.setTextSize(50);
-                    mTimerView.setText("");
+
                     Toast.makeText(getApplicationContext(), "Resuming Game", Toast.LENGTH_SHORT).show();
                     soundPool.play(sound1, 1, 1, 0, 0, 1);
                 }
@@ -174,8 +172,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 //open settings popup
                 if (gameInProgress()) {
                     timer.pause();
-                    mTimerView.setText("Game Paused");
-                    mTimerView.setTextSize(20);
+
                 }
                 Intent settingsPop = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(settingsPop);
@@ -202,7 +199,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     timer = null;
                     clearAllViews();
                 }
-                mTimerView.setTextSize(50);
 
                 break;
             default:
@@ -240,6 +236,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      * A method to clear all views. This allows for user consistency.
      */
     private void clearAllViews() {
+        mTimerView.setTextSize(50);
         mTimerView.setText("*");
         mLetterView.setText("*");
         categoryView.removeAllViews();
