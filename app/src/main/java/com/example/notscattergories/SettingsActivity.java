@@ -1,10 +1,5 @@
 package com.example.notscattergories;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,14 +8,18 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Switch;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText noOfSecondsInput;
     private EditText noOfCategoriesInput;
     private Button submitBtn;
+    private Switch themeSwitch;
 
     private int noOfSeconds;
     private int noOfCategories;
@@ -33,10 +32,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         noOfSecondsInput = findViewById(R.id.editTimer);
         noOfCategoriesInput = findViewById(R.id.editCategories);
+        themeSwitch = findViewById(R.id.themeSwitch);
 
         submitBtn = findViewById(R.id.confirmSettingsBtn);
         submitBtn.setOnClickListener(this);
-    }
+
+         }
+
 
     @Override
     public void onClick(View v) {
@@ -54,6 +56,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 finish();
                 Intent runTutorial = new Intent(getApplicationContext(), GameActivity.class);
                 startActivity(runTutorial);
+                break;
+            case R.id.themeSwitch:
                 break;
             default:
                 break;
