@@ -67,6 +67,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * A method that is called when activity is created.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -103,7 +104,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         initialiseSharedPreferences();
         clearAllViews(); //Ensures consistency in apps display
 
-        if(!mFirstTime){ //@TODO: This should be changed based on shared preferences
+        if (!mFirstTime) { //@TODO: This should be changed based on shared preferences
             AlertDialog alertDialog = mWelcomeDialogBuilder.create();
             alertDialog.show();
         }
@@ -128,13 +129,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * A method to listen for button presses, and perform actions based on that.
+     *
      * @param v The view being pressed.
      */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.countDownTimer:
-                if(!gameInProgress()){
+                if (!gameInProgress()) {
                     startGame();
                 }
                 break;
@@ -148,16 +150,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnPlayPause:
                 //Used to start, play, and pause the timer.
-                if(!gameInProgress() && !countDownInProgess()){
+                if (!gameInProgress() && !countDownInProgess()) {
                     startGame();
                     Toast.makeText(getApplicationContext(), "Starting Game", Toast.LENGTH_SHORT).show();
                     soundPool.play(sound1, 1, 1, 0, 0, 1);
-                } else if(timer.isRunning()) {
+                } else if (timer.isRunning()) {
                     timer.pause();
                     mTimerView.setTextSize(20);
                     mTimerView.setText("Game Paused");
                     Toast.makeText(getApplicationContext(), "Game Paused", Toast.LENGTH_SHORT).show();
-                } else if (!countDownInProgess()){
+                } else if (!countDownInProgess()) {
                     timer.resume();
                     mTimerView.setTextSize(50);
                     mTimerView.setText("");
@@ -171,7 +173,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnSettings:
                 //open settings popup
-                if(gameInProgress()){
+                if (gameInProgress()) {
                     timer.pause();
                     mTimerView.setText("Game Paused");
                     mTimerView.setTextSize(20);
@@ -219,7 +221,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int noOfCats = sharedPref.getInt("categories", NUMBER_OF_CATS);
         if (timer == null) {
             //Create a new timer object if one does not exist. Timer will be null if it has finished.
-            timer = new Timer(time, mTimerView, mCountView, mProgressBar,categoryView, btnPlayPause, this);
+            timer = new Timer(time, mTimerView, mCountView, mProgressBar, categoryView, btnPlayPause, this);
         }
 
         if (!timer.isRunning()) {
@@ -238,7 +240,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * A method to clear all views. This allows for user consistency.
      */
-    private void clearAllViews(){
+    private void clearAllViews() {
         mTimerView.setText("*");
         mLetterView.setText("*");
         categoryView.removeAllViews();
@@ -261,10 +263,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * A method to check whether a game is in progress. It checks whether the timer has finished.
      * This will return true if the game has been paused.
+     *
      * @return True if game is in progress. False if game is not in progress.
      */
-    private boolean gameInProgress(){
-        if (timer != null){
+    private boolean gameInProgress() {
+        if (timer != null) {
             return !timer.isFinished();
         } else {
             return false;
@@ -272,7 +275,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private boolean countDownInProgess() {
-        if (timer != null){
+        if (timer != null) {
             return timer.isCountDownRunning();
         } else {
             return false;
@@ -297,6 +300,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * A method to display a letter in the letterView.
+     *
      * @param letter letter to be displayed.
      */
     private void displayLetter(String letter) {
@@ -305,13 +309,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * A method to display categories. Dynamically allocates to a the LinearLayout category view
+     *
      * @param categoryIndexes The indexes within the allCategories array to be displayed
      */
     private void displayCategories(int[] categoryIndexes) {
         int[] cats = categoryIndexes;
         categoryView.removeAllViews();
 
-        for (int i=0; i<cats.length; i++) {
+        for (int i = 0; i < cats.length; i++) {
             TextView temp = new TextView(this);
             temp.setText(allCategories.get(cats[i]));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -348,7 +353,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void startTour(){
+    private void startTour() {
         //Simulates a game for the tour
         Game game = new Game(6, allCategories.size());
         game.start();
