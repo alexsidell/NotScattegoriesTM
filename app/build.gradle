@@ -28,6 +28,10 @@ android {
     }
 }
 
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -39,4 +43,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    //Welcome screen
+    implementation 'com.github.mreram:showcaseview:1.2.0'
+
 }

@@ -11,52 +11,58 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/timeCategoryBox"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/countDownTimer"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_corner"
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="50sp"
+                android:textColor="@color/white"
+                />
 
-        <TextView
-            android:id="@+id/countDownTimer"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="22dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_corner"
-            android:gravity="center"
-            android:text="TextView"
-            android:textSize="50sp"
-            android:textColor="@color/white"
-            />
-
-        <TextView
-            android:id="@+id/letterView"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:text="TextView"
-            android:textColor="@color/white"
-            android:layout_margin="20dp"
-            android:background="@drawable/rounded_corner"
-            android:gravity="center"
-            android:textSize="50sp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            />
-
+            <TextView
+                android:id="@+id/letterView"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textColor="@color/white"
+                android:layout_margin="20dp"
+                android:background="@drawable/rounded_corner"
+                android:gravity="center"
+                android:textSize="50sp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                />
+        </LinearLayout>
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/countDownTimer"
+            android:layout_below="@+id/timeCategoryBox"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="43dp"
             android:layout_marginRight="43dp"
-            android:progressDrawable="@drawable/gradient"
-            />
+            android:progressTint="#81008891"
+            android:progressTintMode="src_in"
+             />
 
     </RelativeLayout>
 

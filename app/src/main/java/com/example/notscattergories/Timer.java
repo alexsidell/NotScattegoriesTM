@@ -1,7 +1,12 @@
 package com.example.notscattergories;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
@@ -35,8 +40,8 @@ public class Timer {
     private final int TIMER_TICK = 1000;
 
     private boolean mRunning = false;
+    private boolean mCountDownRunning = false;
     private boolean mFinished = true;
-
 
 
     /**
@@ -65,8 +70,6 @@ public class Timer {
         progressAnimator = ObjectAnimator.ofInt(seconds, "progress", 0,1);
         progressAnimator.setDuration(mDuration);
         progressAnimator.start();
-
-
 
         mFinished = false;
     }
@@ -102,7 +105,8 @@ public class Timer {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     mTimeLeft = millisUntilFinished;
-
+                    setTimeLeft((int) millisUntilFinished);
+                    colourChecker((int) millisUntilFinished);
                     updateUI(millisUntilFinished);
                 }
 
@@ -126,12 +130,23 @@ public class Timer {
         }
     }
 
+    public void setTimeLeft(long i){
+        mTimeLeft = i;
+    }
+
+    public long getTimeLeft(){
+        return mTimeLeft;
+    }
+
+
     /**
      * A method to pause the timer, every tick the timer's value is stored in the class variable
      * mTimeLeft. This can be later retrieved when resuming.
      */
     public void pause(){
         if (mCountTimer != null) {
+            //mTimerView.setTextSize(50);
+            mTimerView.setText("ll");
             mCategoryView.setVisibility(View.INVISIBLE);
             mCountTimer.cancel();
             mCountTimer = null;
@@ -146,6 +161,8 @@ public class Timer {
      * This creates another timer from where the previous one was paused.
      */
     public void resume(){
+        //mTimerView.setTextSize(50);
+        mTimerView.setText("");
         countIn(mTimeLeft);
     }
 
@@ -156,6 +173,7 @@ public class Timer {
      * presses the play button.
      */
     public void restart(){
+            //mTimerView.setTextSize(50);
             pause();
             mTimeLeft = mDuration;
             updateUI(mDuration);
@@ -179,12 +197,18 @@ public class Timer {
     }
 
     /**
+     * Getter method for the mCountdownRunning variable.
+     * @return true if countdown timer has finished
+     */
+    public boolean isCountDownRunning() { return mCountDownRunning; }
+
+    /**
      * A method to update the UI. This also adjusts milliseconds to seconds, and updates the
      * progress bar.
      * @param millisUntilFinished Time left on timer.
      */
     private void updateUI(long millisUntilFinished){
-        mTimerView.setText(Long.toString(millisUntilFinished / 1000));
+        mTimerView.setText(Long.toString((millisUntilFinished / 1000)+1));
         int progress = (int) ((millisUntilFinished) / 1000);
         mProgressBar.setProgress(progress);
     }
@@ -192,6 +216,7 @@ public class Timer {
     private void countIn(long timerDuration){
         mCategoryView.setVisibility(View.INVISIBLE);
         mCountDownView.setVisibility(View.VISIBLE);
+        mCountDownRunning = true;
 
         CountDownTimer countIn = new CountDownTimer(3000, TIMER_TICK) {
             /**
@@ -201,7 +226,8 @@ public class Timer {
              */
             @Override
             public void onTick(long millisUntilFinished) {
-                mCountDownView.setText(Long.toString(millisUntilFinished / 1000));
+                mCountDownView.setText(Long.toString(((millisUntilFinished) / 1000)+1));
+
             }
 
             /**
@@ -211,10 +237,28 @@ public class Timer {
             @Override
             public void onFinish() {
                 mCountDownView.setVisibility(View.INVISIBLE);
+                mCountDownRunning = false;
                 play(timerDuration);
             }
 
         }.start();
+    }
+    /**
+     * A method that will check the time left and change the
+     * Progress Bar colour to Red on last 5 seconds
+     * @param i
+     */
+    private void colourChecker(int i){
+        if (i < 5000) {
+            mProgressBar.getProgressDrawable().setColorFilter(
+                    Color.parseColor("#ff6961"), android.graphics.PorterDuff.Mode.SRC_IN);
+
+
+        }else{
+            mProgressBar.getProgressDrawable().setColorFilter(
+                    Color.parseColor("#81008891"), android.graphics.PorterDuff.Mode.SRC_IN);
+        }
+
     }
 
 
@@ -240,4 +284,6 @@ public class Timer {
             }
         });
     }
+
+
 }
