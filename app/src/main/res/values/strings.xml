@@ -14,7 +14,7 @@
 
     <string name="cat_placeholder"> Things that are really fun</string>
 
-    <string name="rulesTitle">How to play NotScattegories</string>
+    <string name="rulesTitle">How to play</string>
     <string name="gotIt">Got it!</string>
     <string name="rules" translatable="false"> \n \nOne player starts the timer. In the time allotted,
         each player must attempt to think of and write down a word or term that fits each of the

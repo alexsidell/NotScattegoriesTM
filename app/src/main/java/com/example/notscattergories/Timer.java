@@ -110,7 +110,6 @@ public class Timer {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     mTimeLeft = millisUntilFinished;
-                    setTimeLeft((int) millisUntilFinished);
                     colourChecker((int) millisUntilFinished);
                     timeChecker((int) millisUntilFinished);
                     updateUI(millisUntilFinished);
@@ -135,15 +134,6 @@ public class Timer {
             }.start();
         }
     }
-
-    public void setTimeLeft(long i){
-        mTimeLeft = i;
-    }
-
-    public long getTimeLeft(){
-        return mTimeLeft;
-    }
-
 
     /**
      * A method to pause the timer, every tick the timer's value is stored in the class variable
@@ -249,6 +239,7 @@ public class Timer {
 
         }.start();
     }
+
     /**
      * A method that will check the time left and change the
      * Progress Bar colour to Red on last 5 seconds
