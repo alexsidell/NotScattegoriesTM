@@ -53,9 +53,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putBoolean("first_time", true);
                 editor.commit();
-                finish();
-                Intent runTutorial = new Intent(getApplicationContext(), GameActivity.class);
-                startActivity(runTutorial);
+
+                GameActivity.getInstance().startTour();
+
                 break;
             case R.id.themeSwitch:
                 break;
