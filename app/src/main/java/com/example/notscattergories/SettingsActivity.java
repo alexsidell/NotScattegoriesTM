@@ -3,7 +3,9 @@ package com.example.notscattergories;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -45,7 +47,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             case R.id.rules:
                 showRules();
             case R.id.tour:
-                //TODO: reset shared preferences
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("first_time", true);
+                editor.commit();
+                finish();
+                Intent runTutorial = new Intent(getApplicationContext(), GameActivity.class);
+                startActivity(runTutorial);
                 break;
             default:
                 break;

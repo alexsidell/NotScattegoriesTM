@@ -44,10 +44,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnRestart; //Store the restart Button
     private Button btnSettings; //Store the settings button
 
-    private SharedPreferences sharedPref;
+    //private SharedPreferences sharedPref;
 
     AlertDialog.Builder mWelcomeDialogBuilder;
-    private boolean mFirstTime;
 
     private LinearLayout categoryView; //LinearLayout to store list of TextViews as categories.
 
@@ -104,10 +103,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         initialiseSharedPreferences();
         clearAllViews(); //Ensures consistency in apps display
 
-        if (!mFirstTime) { //@TODO: This should be changed based on shared preferences
-            AlertDialog alertDialog = mWelcomeDialogBuilder.create();
-            alertDialog.show();
-        }
+        startTutorialIfFirstTime();
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
@@ -332,6 +328,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("time", GAME_TIME);
         editor.putInt("categories", NUMBER_OF_CATS);
+        if (!sharedPref.contains("first_time")) {
+            editor.putBoolean("first_time", true);
+        }
         editor.commit();
     }
 
@@ -435,6 +434,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mGuideView.show();
 
     }
+
+    private boolean isUsersFirstTime() {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        return sharedPrefs.getBoolean("first_time", true);
+    }
+     private void startTutorialIfFirstTime() {
+         if (isUsersFirstTime()) {
+             AlertDialog alertDialog = mWelcomeDialogBuilder.create();
+             alertDialog.show();
+             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+             SharedPreferences.Editor editor = sharedPref.edit();
+             editor.putBoolean("first_time", false);
+             editor.commit();
+         }
+
+     }
 
 
 }
