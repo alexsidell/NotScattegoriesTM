@@ -478,4 +478,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
          startActivity(runTutorial);
      }
 
+     public void playFinalCountDown(){
+         soundPool.play(sound2, 1, 1, 0, 0, 1);
+     }
+
 }

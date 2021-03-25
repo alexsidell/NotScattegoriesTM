@@ -20,6 +20,8 @@ import androidx.appcompat.app.AlertDialog;
  * A class to represent the in game timer. This can start, pause, resume and reset.
  * This class also updates relevant views.
  */
+
+
 public class Timer {
 
     private TextView mTimerView;
@@ -42,6 +44,7 @@ public class Timer {
     private boolean mRunning = false;
     private boolean mCountDownRunning = false;
     private boolean mFinished = true;
+    private Boolean endSoundPlaying = false;
 
 
     /**
@@ -92,6 +95,8 @@ public class Timer {
             mFinished = false;
             mRunning = true;
 
+            endSoundPlaying = false;
+
             mCategoryView.setVisibility(View.VISIBLE);
             //Draw a pause button as timer is currently playing.
             mPlayPauseButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
@@ -107,6 +112,7 @@ public class Timer {
                     mTimeLeft = millisUntilFinished;
                     setTimeLeft((int) millisUntilFinished);
                     colourChecker((int) millisUntilFinished);
+                    timeChecker((int) millisUntilFinished);
                     updateUI(millisUntilFinished);
                 }
 
@@ -253,7 +259,6 @@ public class Timer {
             mProgressBar.getProgressDrawable().setColorFilter(
                     Color.parseColor("#ff6961"), android.graphics.PorterDuff.Mode.SRC_IN);
 
-
         }else{
             mProgressBar.getProgressDrawable().setColorFilter(
                     Color.parseColor("#81008891"), android.graphics.PorterDuff.Mode.SRC_IN);
@@ -261,6 +266,16 @@ public class Timer {
 
     }
 
+
+    private void timeChecker(int i){
+        if (i < 5000) {
+            if (endSoundPlaying)
+                return;
+
+            mContext.playFinalCountDown();
+            endSoundPlaying = true;
+        }
+    }
 
 
     /**
