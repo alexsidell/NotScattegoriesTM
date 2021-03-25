@@ -12,7 +12,7 @@ import java.util.Random;
 public class Game {
 
     private int numberOfCategories;
-    private int[] catIndexes;
+    public int[] catIndexes;
     final private char[] LETTERS = "ABCDEFGHIJKLMNOPRSTW".toCharArray();
     private String letter;
     private int totalNumberOfCategoriesInFile;
