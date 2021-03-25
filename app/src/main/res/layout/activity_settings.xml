@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
-    tools:context=".SettingsActivity">
+    tools:context=".SettingsActivity"
+    android:theme="@style/AlertDialogCustom"
+    >
 
     <EditText
         android:id="@+id/editTimer"
@@ -58,5 +60,15 @@
         android:layout_margin="10dp"
         android:onClick="onClick"
         android:text="Welcome Tour" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/themeSwitch"
+        android:checked="false"
+        android:text="Toggle Colour Correction"
+        android:layout_below="@+id/tour"
+        />
 
 </RelativeLayout>
