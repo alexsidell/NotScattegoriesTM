@@ -89,7 +89,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         categoryView = findViewById(R.id.categoryLayoutView);
 
-
         btnPlayers = findViewById(R.id.btnPlayers);
         btnPlayPause = findViewById(R.id.btnPlayPause);
         btnRestart = findViewById(R.id.btnRestart);
@@ -161,13 +160,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     soundPool.play(sound1, 1, 1, 0, 0, 1);
                 } else if (timer.isRunning()) {
                     timer.pause();
-                    mTimerView.setTextSize(20);
-                    mTimerView.setText("Game Paused");
+
                     Toast.makeText(getApplicationContext(), "Game Paused", Toast.LENGTH_SHORT).show();
                 } else if (!countDownInProgess()) {
                     timer.resume();
-                    mTimerView.setTextSize(50);
-                    mTimerView.setText("");
+
                     Toast.makeText(getApplicationContext(), "Resuming Game", Toast.LENGTH_SHORT).show();
                     soundPool.play(sound1, 1, 1, 0, 0, 1);
                 }
@@ -180,8 +177,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 //open settings popup
                 if (gameInProgress()) {
                     timer.pause();
-                    mTimerView.setText("Game Paused");
-                    mTimerView.setTextSize(20);
+
                 }
                 Intent settingsPop = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(settingsPop);
@@ -208,7 +204,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     timer = null;
                     clearAllViews();
                 }
-                mTimerView.setTextSize(50);
 
                 break;
             default:
@@ -248,6 +243,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      * A method to clear all views. This allows for user consistency.
      */
     private void clearAllViews() {
+        mTimerView.setTextSize(50);
         mTimerView.setText("*");
         mLetterView.setText("*");
         categoryView.removeAllViews();
@@ -343,10 +339,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void initialiseSharedPreferences() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("time", GAME_TIME);
-        editor.putInt("categories", NUMBER_OF_CATS);
         if (!sharedPref.contains("first_time")) {
             editor.putBoolean("first_time", true);
+            editor.putInt("time", GAME_TIME);
+            editor.putInt("categories", NUMBER_OF_CATS);
         }
         editor.commit();
     }
@@ -371,6 +367,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void startTour() {
         //Simulates a game for the tour
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("first_time", false);
+        editor.commit();
         Game game = new Game(6, allCategories.size());
         game.start();
 
