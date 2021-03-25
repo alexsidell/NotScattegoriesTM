@@ -89,7 +89,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         categoryView = findViewById(R.id.categoryLayoutView);
 
-
         btnPlayers = findViewById(R.id.btnPlayers);
         btnPlayPause = findViewById(R.id.btnPlayPause);
         btnRestart = findViewById(R.id.btnRestart);
