@@ -13,7 +13,7 @@ public class RulesDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.rulesTitle);
-        builder.setMessage(R.string.rules);
+        builder.setMessage(R.string.newrules);
         builder.setNeutralButton(R.string.gotIt, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
