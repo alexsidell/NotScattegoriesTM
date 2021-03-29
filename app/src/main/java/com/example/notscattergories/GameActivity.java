@@ -150,13 +150,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnPlayers:
                 //Show player info
 
-                if (gameInProgress()) {
+                if (gameInProgress() && !countDownInProgess()){
                     timer.pause();
-
-                } else if (countDownInProgess()) {
-                    timer.restart();
-                                    }
                     launchPlayers();
+                } else if (countDownInProgess() == true) {
+                Toast.makeText(mInstance, "Countdown in progress", Toast.LENGTH_SHORT).show();
+                 }  else {
+                 launchPlayers();
+                }
+
+
 
 
                 break;
