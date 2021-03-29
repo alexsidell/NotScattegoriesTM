@@ -166,19 +166,6 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onDialogPositiveClick(DialogFragment dialogFragment, String newPlayerName) {
         //Add player to player list
-//        try {
-//            playerList.get(newPlayerName);
-//            DialogFragment addPlayerError = new AddPlayerError();
-//            addPlayerError.show(getSupportFragmentManager(), "addPlayerError");
-//        }catch (Exception e){System.out.println("Name does not exist already in Hashmap");
-//            try {
-//                playerList.put(newPlayerName, 0);
-//            } catch (Exception f) {
-//                System.out.println("Not added to Hashmap");
-//            }
-//        }
-//        displayScores();
-
         if (playerList.containsKey(newPlayerName)){
             DialogFragment addPlayerError = new AddPlayerError();
             addPlayerError.show(getSupportFragmentManager(), "addPlayerError");
