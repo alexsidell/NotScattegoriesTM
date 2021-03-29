@@ -2,11 +2,18 @@ package com.example.notscattergories;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ActionMenuView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -98,7 +105,7 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
 
             String player = name;
             //Player Name
-            TextView playerView = new TextView(this);
+            EditText playerView = new EditText(this);
             playerView.setId(idCounter);
             idCounter++;
             playerView.setText(player);
@@ -111,7 +118,8 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
             idCounter++;
             playerLayout.addView(subPoint);
             //Player Score
-            TextView scoreView = new TextView(this);
+            EditText scoreView = new EditText(this);
+            scoreView.setInputType(InputType.TYPE_CLASS_NUMBER);
             scoreView.setId(idCounter);
             idCounter++;
             scoreView.setText(playerList.get(player).toString());
