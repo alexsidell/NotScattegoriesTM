@@ -1,18 +1,15 @@
 package com.example.notscattergories;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.ActionMenuView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -47,8 +44,9 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnBackToGame:
-                Intent backToGame = new Intent(getApplicationContext(), GameActivity.class);
-                startActivity(backToGame);
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_CANCELED, returnIntent);
+                finish();
                 break;
             case R.id.btnAddPlayer:
                 //send pop up
