@@ -1,5 +1,6 @@
 package com.example.notscattergories;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -47,8 +48,9 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnBackToGame:
-                Intent backToGame = new Intent(getApplicationContext(), GameActivity.class);
-                startActivity(backToGame);
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_CANCELED, returnIntent);
+                finish();
                 break;
             case R.id.btnAddPlayer:
                 //send pop up
@@ -129,7 +131,6 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
             addPoint.setId(idCounter);
             idCounter++;
             playerLayout.addView(addPoint);
-
 
             playerLayout.setWeightSum(2);
             playerView.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
