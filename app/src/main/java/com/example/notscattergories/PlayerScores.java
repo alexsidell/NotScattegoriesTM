@@ -23,6 +23,7 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerScores extends AppCompatActivity implements View.OnClickListener, AddPlayerDialog.AddPlayerDialogListener {
     HashMap<String, Integer> scores = new HashMap<String, Integer>();
@@ -38,9 +39,13 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
 
         Button back = findViewById(R.id.btnBackToGame);
         Button add_player = findViewById(R.id.btnAddPlayer);
+        Button reset_scores = findViewById(R.id.btnResetScores);
+        Button reset_players = findViewById(R.id.btnResetPlayers);
 
         back.setOnClickListener(this);
         add_player.setOnClickListener(this);
+        reset_scores.setOnClickListener(this);
+        reset_players.setOnClickListener(this);
         //For testing
         displayScores();
 
@@ -56,6 +61,12 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
             case R.id.btnAddPlayer:
                 //send pop up
                 addPlayer();
+                break;
+            case R.id.btnResetScores:
+                resetScores();
+                break;
+            case R.id.btnResetPlayers:
+                resetPlayers();
                 break;
             default:
                 int num = v.getId();
@@ -176,6 +187,21 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
     public void onDialogNegativeClick(DialogFragment dialogFragment) {
         //Action cancelled
         dialogFragment.getDialog().cancel();
+    }
+
+    public void resetPlayers() {
+        playerList.clear();
+        displayScores();
+    }
+
+    public void resetScores() {
+        System.out.println("ETERR");
+        for (String key: playerList.keySet()) {
+            System.out.println("value before " + playerList.get(key));
+            playerList.put(key, 0);
+            System.out.println("value after" + playerList.get(key));
+        }
+        displayScores();
     }
 
 }
