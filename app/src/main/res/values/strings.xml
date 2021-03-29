@@ -44,6 +44,18 @@
         in the case of things commonly found in the kitchen that start with the letter K, both knife
         (a kitchen tool) or Kelp, (a type of food that is commonly cooked in kitchens around the world)
         are acceptable answers. \n \n</string>
+    <string name="newrules" translatable="false">
+    \n\nEach round you will get a letter and a set amount categories.\n\n
+    Answer each category with a word or phrase starting with that letter within the set time limit.\n\n
+    You cannot have the same word twice!\n\n
+    Then vote amongst yourselves at the end as to whether another player’s answer is valid. This is all up to you guys!\n\n
+    -	“The” does not count so like “The Matrix” would not count!\n\n
+    -	Starting with a Last name is A-Okay! For example “Rudd, Paul”!\n\n
+    -	It’s up to you as to whether you’ll allow adjectives like “Green Beans”!\n\n
+    Try to be unique!/n If another player has the same answer, neither player will get points for that category.\n\n
+    You get ONE point for every unique and correct answer!\n\n
+    </string>
+
     <string name="time_set_hint">Number Of Seconds</string>
     <string name="no_of_cats_hint">Number Of Categories</string>
     <string name="SettingsConfirmStr">MAKE CHANGES</string>
