@@ -13,62 +13,92 @@
         android:id="@+id/editTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:ems="10"
-        android:inputType="number"
-        android:layout_centerHorizontal="true"
         android:hint="@string/time_set_hint"
-        android:layout_margin="10dp"
-        />
+        android:inputType="number"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/editCategories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/no_of_cats_hint"
         android:layout_below="@id/editTimer"
-        android:layout_margin="10dp"
-        />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:hint="@string/no_of_cats_hint"
+        android:inputType="number"
+        android:textSize="14sp" />
 
     <Button
         android:id="@+id/confirmSettingsBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="200dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/SettingsConfirmStr"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/editCategories"
-        android:layout_margin="10dp"/>
+        android:textSize="12sp" />
 
     <Button
         android:id="@+id/rules"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/confirmSettingsBtn"
+        android:layout_below="@+id/editCategories"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:onClick="onClick"
-        android:text="@string/rulesTitle" />
+        android:text="@string/rulesTitle"
+        android:textSize="12sp" />
 
     <Button
         android:id="@+id/tour"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rules"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:onClick="onClick"
-        android:text="Welcome Tour" />
+        android:text="Welcome Tour"
+        android:textSize="12sp" />
 
     <Switch
+        android:id="@+id/themeSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tour"
         android:layout_centerHorizontal="true"
-        android:id="@+id/themeSwitch"
         android:checked="false"
         android:text="Toggle Colour Correction"
-        android:layout_below="@+id/tour"
-        />
+        android:textSize="14sp" />
 
 </RelativeLayout>
