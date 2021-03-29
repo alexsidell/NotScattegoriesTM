@@ -150,22 +150,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnPlayers:
                 //Show player info
 
-                if (gameInProgress() && !countDownInProgess()){
+                if (countDownInProgress()){
+                    Toast.makeText(mInstance, "Countdown in progress", Toast.LENGTH_SHORT).show();
+                } else if (gameInProgress()) {
                     timer.pause();
                     launchPlayers();
-                } else if (countDownInProgess() == true) {
-                Toast.makeText(mInstance, "Countdown in progress", Toast.LENGTH_SHORT).show();
-                 }  else {
-                 launchPlayers();
+                }  else {
+                    launchPlayers();
                 }
-
-
-
-
                 break;
             case R.id.btnPlayPause:
                 //Used to start, play, and pause the timer.
-                if (!gameInProgress() && !countDownInProgess()) {
+                if (!gameInProgress() && !countDownInProgress()) {
                     startGame();
                     Toast.makeText(getApplicationContext(), "Starting Game", Toast.LENGTH_SHORT).show();
                     soundPool.play(sound1, 1, 1, 0, 0, 1);
@@ -173,7 +169,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     timer.pause();
 
                     Toast.makeText(getApplicationContext(), "Game Paused", Toast.LENGTH_SHORT).show();
-                } else if (!countDownInProgess()) {
+                } else if (!countDownInProgress()) {
                     timer.resume();
 
                     Toast.makeText(getApplicationContext(), "Resuming Game", Toast.LENGTH_SHORT).show();
@@ -190,9 +186,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     timer.pause();
 
                 }
-                Intent settingsPop = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(settingsPop);
-                break;
+                if (!countDownInProgress()) {
+                    Intent settingsPop = new Intent(getApplicationContext(), SettingsActivity.class);
+                    startActivity(settingsPop);
+                    break;
+                } else {
+                    Toast.makeText(this, "Countdown in progress", Toast.LENGTH_SHORT).show();
+                }
 
             default:
 
@@ -210,7 +210,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btnRestart:
                 //Used to restart
-                if (timer != null && !countDownInProgess()) {
+                if (timer != null && !countDownInProgress()) {
                     timer.restart();
                     timer = null;
                     clearAllViews();
@@ -297,7 +297,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private boolean countDownInProgess() {
+    private boolean countDownInProgress() {
         if (timer != null) {
             return timer.isCountDownRunning();
         } else {
