@@ -18,6 +18,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
@@ -71,13 +72,18 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
                 int num = v.getId();
                 TextView playerView;
                 TextView scoreView;
-                if(num%4==0){
+                if((num+1)%5==0){
                     //Add a point
                     scoreView = findViewById(num-1);
                     playerView = findViewById(num-3);
                     String playerName = playerView.getText().toString();
                     Integer playerScore = Integer.parseInt(scoreView.getText().toString());
                     playerList.put(playerName,playerScore+1);
+                }
+                else if (num%5==0){
+                    playerView = findViewById(num-4);
+                    String playerName = playerView.getText().toString();
+                    playerList.remove(playerName);
                 }
                 else {
                     //Subtract a point
@@ -108,6 +114,7 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
         playerListInner.removeAllViews();
         ArrayList<String> arrayListVersion = new ArrayList<String>(playerList.keySet());
         int idCounter = 1;
+        LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(100, ViewGroup.LayoutParams.WRAP_CONTENT);
 
 
         for (String name:playerList.keySet()) {
@@ -125,6 +132,8 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
             Button subPoint = new Button(this);
             subPoint.setOnClickListener(this);
             subPoint.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_remove,0,0,0);
+            subPoint.setLayoutParams(buttonParams);
+            subPoint.setBackgroundColor(Color.TRANSPARENT);
             subPoint.setId(idCounter);
             idCounter++;
             playerLayout.addView(subPoint);
@@ -137,11 +146,23 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
             playerLayout.addView(scoreView);
             //Add Point Button
             Button addPoint = new Button(this);
-            addPoint.setOnClickListener(this::onClick);
+            addPoint.setOnClickListener(this);
             addPoint.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add,0,0,0);
+            addPoint.setLayoutParams(buttonParams);
+            addPoint.setBackgroundColor(Color.TRANSPARENT);
             addPoint.setId(idCounter);
             idCounter++;
             playerLayout.addView(addPoint);
+            //Remove player button
+            Button removePlayer = new Button(this);
+            removePlayer.setOnClickListener(this);
+            removePlayer.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_remove_player,0,0,0);
+            removePlayer.setId(idCounter);
+            removePlayer.setLayoutParams(buttonParams);
+            removePlayer.setBackgroundColor(Color.TRANSPARENT);
+            idCounter++;
+            playerLayout.addView(removePlayer);
+
 
             playerLayout.setWeightSum(2);
             playerView.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
