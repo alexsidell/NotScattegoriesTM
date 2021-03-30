@@ -1,23 +1,31 @@
 package com.example.notscattergories;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ActionMenuView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerScores extends AppCompatActivity implements View.OnClickListener, AddPlayerDialog.AddPlayerDialogListener {
     HashMap<String, Integer> scores = new HashMap<String, Integer>();
@@ -115,15 +123,6 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
             playerLayout.setOrientation(LinearLayout.HORIZONTAL);
 
             String player = name;
-            //Remove player button
-            Button removePlayer = new Button(this);
-            removePlayer.setOnClickListener(this);
-            removePlayer.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_remove_player,0,0,0);
-            removePlayer.setId(idCounter);
-            removePlayer.setLayoutParams(buttonParams);
-            removePlayer.setBackgroundColor(Color.TRANSPARENT);
-            idCounter++;
-            playerLayout.addView(removePlayer);
             //Player Name
             EditText playerView = new EditText(this);
             playerView.setId(idCounter);
@@ -155,7 +154,15 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
             addPoint.setId(idCounter);
             idCounter++;
             playerLayout.addView(addPoint);
-
+            //Remove player button
+            Button removePlayer = new Button(this);
+            removePlayer.setOnClickListener(this);
+            removePlayer.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_remove_player,0,0,0);
+            removePlayer.setId(idCounter);
+            removePlayer.setLayoutParams(buttonParams);
+            removePlayer.setBackgroundColor(Color.TRANSPARENT);
+            idCounter++;
+            playerLayout.addView(removePlayer);
 
 
             playerLayout.setWeightSum(2);
