@@ -1,6 +1,5 @@
 package com.example.notscattergories;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -37,7 +36,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         submitBtn = findViewById(R.id.confirmSettingsBtn);
         submitBtn.setOnClickListener(this);
 
-         }
+    }
+
 
 
     @Override
@@ -67,6 +67,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 break;
         }
     }
+
+
 
     private void showRules() {
         DialogFragment newFragment = new RulesDialog();
