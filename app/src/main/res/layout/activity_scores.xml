@@ -55,13 +55,39 @@
                 android:orientation="vertical">
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btnAddPlayer"
-                android:layout_width="56dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:icon="@drawable/ic_add" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <Button
+                    android:id="@+id/btnAddPlayer"
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_centerInParent="true"
+                    app:icon="@drawable/ic_add" />
+
+                <Button
+                    android:id="@+id/btnResetPlayers"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/reset_players"
+                    android:textSize="12sp"
+                    android:layout_toLeftOf="@id/btnAddPlayer"
+                    android:layout_marginRight="30dp"/>
+
+                <Button
+                    android:id="@+id/btnResetScores"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/reset_scores"
+                    android:textSize="12sp"
+                    android:layout_toRightOf="@id/btnAddPlayer"
+                    android:layout_marginLeft="30dp"/>
+
+            </RelativeLayout>
         </LinearLayout>
 
     </ScrollView>

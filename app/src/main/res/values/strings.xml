@@ -60,4 +60,7 @@
     <string name="no_of_cats_hint">Number Of Categories</string>
     <string name="SettingsConfirmStr">MAKE CHANGES</string>
     <string name="title_activity_animal_sound">AnimalSound</string>
+
+    <string name="reset_players">clear players</string>
+    <string name="reset_scores">reset scores</string>
 </resources>
