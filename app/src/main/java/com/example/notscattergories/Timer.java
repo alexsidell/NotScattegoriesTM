@@ -44,7 +44,6 @@ public class Timer {
     private boolean mRunning = false;
     private boolean mCountDownRunning = false;
     private boolean mFinished = true;
-    private Boolean endSoundPlaying = false;
 
 
     /**
@@ -95,8 +94,6 @@ public class Timer {
             mFinished = false;
             mRunning = true;
 
-            endSoundPlaying = false;
-
             mCategoryView.setVisibility(View.VISIBLE);
             //Draw a pause button as timer is currently playing.
             mPlayPauseButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_pause, 0, 0, 0);
@@ -111,7 +108,6 @@ public class Timer {
                 public void onTick(long millisUntilFinished) {
                     mTimeLeft = millisUntilFinished;
                     colourChecker((int) millisUntilFinished);
-                    timeChecker((int) millisUntilFinished);
                     updateUI(millisUntilFinished);
                 }
 
@@ -149,6 +145,7 @@ public class Timer {
             mRunning = false;
             //Draw play button at timer is currently paused
             mPlayPauseButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play, 0, 0, 0);
+
         }
     }
 
@@ -160,6 +157,8 @@ public class Timer {
         //mTimerView.setTextSize(50);
         mTimerView.setText("");
         countIn(mTimeLeft);
+
+
     }
 
     /**
@@ -255,17 +254,6 @@ public class Timer {
                     Color.parseColor("#81008891"), android.graphics.PorterDuff.Mode.SRC_IN);
         }
 
-    }
-
-
-    private void timeChecker(int i){
-        if (i < 5000) {
-            if (endSoundPlaying)
-                return;
-
-            mContext.playFinalCountDown();
-            endSoundPlaying = true;
-        }
     }
 
 
