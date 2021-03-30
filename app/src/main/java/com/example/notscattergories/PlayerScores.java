@@ -1,6 +1,8 @@
 package com.example.notscattergories;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -59,7 +61,6 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.btnAddPlayer:
-                //send pop up
                 addPlayer();
                 break;
             case R.id.btnResetScores:
@@ -176,11 +177,15 @@ public class PlayerScores extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onDialogPositiveClick(DialogFragment dialogFragment, String newPlayerName) {
         //Add player to player list
-        try {
-            playerList.put(newPlayerName,0);
-        }catch (Exception e){System.out.println("Not added to Hashmap");}
-        displayScores();
+        if (playerList.containsKey(newPlayerName)){
+            DialogFragment addPlayerError = new AddPlayerError();
+            addPlayerError.show(getSupportFragmentManager(), "addPlayerError");
+        }
+        else{
+            playerList.put(newPlayerName, 0);
 
+        }
+        displayScores();
     }
 
     @Override
