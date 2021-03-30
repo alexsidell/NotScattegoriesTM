@@ -1,6 +1,5 @@
 package com.example.notscattergories;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,18 +13,20 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-public class SettingsActivity extends AppCompatActivity implements View.OnClickListener{
+public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText noOfSecondsInput;
     private EditText noOfCategoriesInput;
     private Button submitBtn;
     private Switch themeSwitch;
 
+
     private int noOfSeconds;
     private int noOfCategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_settings);
@@ -37,7 +38,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         submitBtn = findViewById(R.id.confirmSettingsBtn);
         submitBtn.setOnClickListener(this);
 
-         }
+    }
 
 
     @Override
@@ -67,6 +68,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 break;
         }
     }
+
 
     private void showRules() {
         DialogFragment newFragment = new RulesDialog();
@@ -117,6 +119,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         editor.commit();
         Toast.makeText(getApplicationContext(), "Changes Made", Toast.LENGTH_SHORT).show();
 
-    }
+        themeSwitch = (Switch) findViewById(R.id.themeSwitch);
 
+
+    }
 }
