@@ -58,7 +58,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private final int NUMBER_OF_CATS = 12;
     private SoundPool soundPool;
     private int sound1;
-    private int sound2;
 
 
     private GuideView mGuideView;
@@ -67,6 +66,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private boolean eyesOpen = true;
 
     private static GameActivity mInstance;
+
+
 
     /**
      * A method that is called when activity is created.
@@ -126,7 +127,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         sound1 = soundPool.load(this, R.raw.sound1, 1);
-        sound2 = soundPool.load(this, R.raw.sound2, 1);
 
 
     }
@@ -498,8 +498,5 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
          startActivity(runTutorial);
      }
 
-     public void playFinalCountDown(){
-         soundPool.play(sound2, 1, 1, 0, 0, 1);
-     }
 
 }
